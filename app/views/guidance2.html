@@ -1,0 +1,100 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Mainstream guide example
+{% endblock %}
+
+{% block header %}
+  <!-- Blank header with no service name for this page -->
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Department for sustenence",
+        href: "#"
+      },
+      {
+        text: "Claim lunch expenses"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Lunch expenses
+      </h1>
+
+      <aside class="govuk-prototype-kit-common-templates-mainstream-guide-contents-list" role="complementary">
+        <nav class="govuk-prototype-kit-common-templates-contents-list" aria-label="Pages in this guide" role="navigation">
+          <h2 class="govuk-prototype-kit-common-templates-contents-list__title">
+            Contents
+          </h2>
+          <ol class="govuk-prototype-kit-common-templates-contents-list__list">
+            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed govuk-prototype-kit-common-templates-contents-list__list-item--active">
+              <a href="#">
+                Expenses you can claim
+              </a>
+            </li>
+            <li aria-current="true" class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+              Expenses you can't claim
+            </li>
+            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+              <a href="#">
+                Submit a claim and get reimbursed
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </aside>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds govuk-prototype-kit-common-templates-mainstream-guide-body">
+
+      <h2 class="govuk-heading-m"> Submit a claim and get reimbursed</h2>
+
+      <p>You can <a href="/start">start your claim online</a>, or you can submit by email.</p>
+
+      <h3 class="govuk-heading-s">You need to provide:</h3>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>details the expense</li>
+        <li>date of the expense</li>
+        <li>receipts showing item, price and date</li>
+      </ul>
+
+          <p>If you're not sure whether an item can be reimbursed, check the full staff expenses policy or ask your manager.</p>
+
+          <h3 class="govuk-heading-s">You need to provide:</h3>
+<p>Once your reciepts are uploaded should receive a decision within 5 working days, payment will be made to the bank details on your work profile.</p>
+      <nav class="govuk-prototype-kit-common-templates-pagination" role="navigation" aria-label="Pagination">
+        {{ govukPagination({
+          previous: {
+            labelText: "How to claim",
+            href: "/guidance1"
+          }
+        
+        }) }}
+      </nav>
+
+      <p>
+        <a href="#">View a printable version of the whole guide</a>
+      </p>
+
+    </div>
+
+    
+  </div>
+{% endblock %}

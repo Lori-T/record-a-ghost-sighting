@@ -5,14 +5,141 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
 
     {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
 
     <h1 class="govuk-heading-xl">
       {{ serviceName }}
     </h1>
+    <p class="govuk-body">This is an example service to help teach people about accessibility issues</p>
+    {{ govukButton({
+      text: "Go to the service",
+      href: "/start",
+      isStartButton: true
+    }) }}
+    
+    <h2 class="govuk-heading-m">Pages in this prototype</h2>
 
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Page name</th>
+          <th scope="col" class="govuk-table__header">URL</th>
+          <th scope="col" class="govuk-table__header">Issues</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Start page</td>
+          <td class="govuk-table__cell"><a href="/start">/start</a></td>
+          <td class="govuk-table__cell"><p><strong>Headings not styled correctly</strong>
+             Headings are not styled correctly on this page, the 'Claim lunch expenses' looks like a heading but itsn't styled using the h1 tag, the h1 starts at the 'before you start' content.</p>
+             <p><strong>Altered tab order on side menu</strong>
+The tab order is a bit random, when you're tabbing through the list of links on the right-hand side of the page. This is unpredictable, and a bit disorienting. While it's not a huge issue in this scenario, if the links were further apart on the page, or there were a lot of links it could cause issues for users who use a screen magnifier or browser zoom. They might not be able to tell where focus is gone, and have to hunt from it, or might have had their screen view dragged across the page as it's following focus (depending on how they've configured their assistive technologies).</p>
+<p><strong>Link opens in new tab</strong>
+Opening a link in a new tab can be appropriate if you tell the user in advance that it's going to happen. This can be done with either with content in the link text or with an icon that has appropriate alternative text. In this case, neither of these techniques have been used. This is an issue because the user may not be aware the the new tab or windows has opened. They then can't use the back button on the keyboard to navigate to where they were, as a new tab history has been opened.</p>        
+<p><strong>Undescriptive link text</strong>
+Screen reader users can view links out of context through a links menu. This can be quicker to skim through. If link text doesn't make sense out of context, it would be unusable when viewed this way. The 'Find out 
+,ore' link on the start page doesn't make any sense out of context - particularly as it takes you to a completely different website with generic guidance on claiming tax relief rather than info about lunch expenses.</p>
+<p><strong>Poor focus styling on link</strong>
+If the focus state style doesn't have a high enough contrast and it can be really hard to tell where focus is. This particularly effects people who have a sight impairement. In this instance, this issue can be fixed by adding the appropriate Design System link class.</p>
+</td>
+</tr>
+
+        
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Account page</td>
+          <td class="govuk-table__cell"><a href="/account">/account</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Account complete page</td>
+          <td class="govuk-table__cell"><a href="/account2">/account2</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Personal details</td>
+          <td class="govuk-table__cell"><a href="/question1">/question1</a></td>
+          <td class="govuk-table__cell"><p><strong>Missing page title</strong>
+Some screen readers (like JAWS) read the page title out when a page loads. On this page, there is no title, which means a screen reader user is missing context. An example of a possible page title would be the page question, followed by the service name, and followed by whatever it's hosted on - so 'Personal details - Claim lunch expenses- GOV.UK', if it were on GOV.UK.</p>
+  <p><strong>Hint text not descriptive enough</strong>
+On the Staff ID field, users can enter only numbers, on the example staff ID card given to participants this is shown as ABC-12345, users are not made aware of this on the page anywhere.</p>
+<p><strong>Continue button isn’t keyboard focusable</strong>
+You can still get past this page by pressing enter when on the radio buttons, but a user might not know this. They might (understandably) expect that the only way to progress is by submitting enter, and so feel trapped and abandon the service at this point. All interactive elements must be usabled with the keyboard. The fix would be removing the tabindex="-1".</p>
+<p><strong>Insufficient colour contrast of the form hint</strong>
+The colour contrast is way too low for the form hint text. In the Design System, it's a darker grey, which does have a sufficient colour contrast ratio. Respecting the out-of-the-box colours and not overriding them here would fix this issue.</p>
+</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Type of expense</td>
+          <td class="govuk-table__cell"><a href="/question2">/question2</a></td>
+          <td class="govuk-table__cell"><p><strong>No legend on the radio button</strong>
+          We can visually tell that the buttons relate to the main heading by looking at the page. But, the question isn't linked up to the element in a way that makes sense for users who can't see. For radio buttons and checkboxes, it's important to have a legend element. The fix would be making sure the 'h1' is inside the 'legend', as per the Design System pattern.</p>
+        <p><strong>Wrong page title</strong>
+         The previous page title was missing, similarly if a page has an incorrect title this can be confusing for users, particularly as this page title is 'confirmation' people might think they have finished the service.</p>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"> What date was the lunch expense?</td>
+          <td class="govuk-table__cell"><a href="/question3">/question3</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">What did you buy for lunch?</td>
+          <td class="govuk-table__cell"><a href="/question4">/question4</a></td>
+          <td class="govuk-table__cell"><p><strong>Visually hidden item you can tab onto</strong>
+Sometimes interactive elements can get hidden off screen. It can be confusing for keyboard users who are tabbing through the screen, because the focus disappears, and you end up not being entirely sure where or when it's going to reappear, or what would happen if you tried to select the element you were on. If something has focus, it's best that it becomes visible, at least for the duration of it having focus. In many cases think whether there is value for other users by having the content visible at all times.</p></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Check your answers</td>
+          <td class="govuk-table__cell"><a href="/checkanswers">/checkanswers</a></td>
+          <td class="govuk-table__cell"><p><strong>Change link - hidden text is incorrect</strong>
+Links needing to make sense out of context. In this component from the Design System, given the change link is just across from the question, it would be unnecessary to have the question visually included in the link. But, we can visually hide text to help people who can't see it.  A sighted user would see 'change', but a screen reader user would hear 'change (whatever the question is)'. However, it's been configured incorrectly here and doesn't include any information on the change links other than the date field.</p></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Upload receipt(s)</td>
+          <td class="govuk-table__cell"><a href="/upload">/upload</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Tasklist incomplete page</td>
+          <td class="govuk-table__cell"><a href="/tasklist">/tasklist</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Tasklist complete page</td>
+          <td class="govuk-table__cell"><a href="/tasklist1">/tasklist1</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Confirmation page</td>
+          <td class="govuk-table__cell"><a href="/confirmation">/confirmation</a></td>
+          <td class="govuk-table__cell"><p><Strong>Use of all uppercase letters</Strong>
+            In the confirmation text and also the page headings, all capital letters have been used. This can cause barriers for people with cognitive disabibilites or dyslexia, although its not a huge problem here as there is not a lot of text, it can be very problematic if large blocks of text are in all capitals.</p></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Confirmation alternative page</td>
+          <td class="govuk-table__cell"><a href="/confirmation1">/confirmation1</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Guidance - allowed</td>
+          <td class="govuk-table__cell"><a href="/guidance">/guidance</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Guidance - how to claim</td>
+          <td class="govuk-table__cell"><a href="/guidance1">/guidance1</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Guidance - when you are reimbursed</td>
+          <td class="govuk-table__cell"><a href="/guidance2">/guidance2</a></td>
+          <td class="govuk-table__cell">There are no accessibility issues on this page</td>
+        </tr>
+      </tbody>
+    </table>
+    
     {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
   </div>
 </div>

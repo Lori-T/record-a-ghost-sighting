@@ -1,0 +1,110 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirmation
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div id="error-summary-container"></div>
+
+    <h1 class="govuk-heading-l">
+      What type of lunch expense are you claiming for?
+    </h1>
+
+    <form class="form" id="expense-form" novalidate>
+
+      <div class="govuk-form-group" id="radios-group">
+        <!-- Radios with no fieldset/legend grouping -->
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="travel" name="expense-type" type="radio" value="Travel">
+          <label class="govuk-label govuk-radios__label" for="travel">Work-related travel</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="meeting" name="expense-type" type="radio" value="Meeting">
+          <label class="govuk-label govuk-radios__label" for="meeting">External meeting</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="other" name="expense-type" type="radio" value="Other">
+          <label class="govuk-label govuk-radios__label" for="other">Other</label>
+        </div>
+      </div>
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <script>
+      document.getElementById('expense-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Reset previous errors
+        document.getElementById('error-summary-container').innerHTML = '';
+        const radiosGroup = document.getElementById('radios-group');
+        radiosGroup.classList.remove('govuk-form-group--error');
+        const oldError = document.querySelector('#radios-group .govuk-error-message');
+        if (oldError) oldError.remove();
+
+        let hasError = false;
+        const selected = document.querySelector('input[name="expense-type"]:checked');
+        const errors = [];
+
+        if (!selected) {
+          const errorMessage = 'Select a type of expense';
+          radiosGroup.classList.add('govuk-form-group--error');
+          const errorEl = document.createElement('p');
+          errorEl.className = 'govuk-error-message';
+          errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
+          radiosGroup.prepend(errorEl);
+          errors.push({ fieldId: 'travel', message: errorMessage }); // Link to first radio
+          hasError = true;
+        }
+
+        if (hasError) {
+          displayErrorSummary(errors);
+        } else {
+          // Simulate form submission
+          window.location.href = "/question3";
+        }
+
+        function displayErrorSummary(errors) {
+          const container = document.getElementById('error-summary-container');
+          const summary = document.createElement('div');
+          summary.className = 'govuk-error-summary';
+          summary.setAttribute('aria-labelledby', 'error-summary-title');
+          summary.setAttribute('role', 'alert');
+          summary.setAttribute('tabindex', '-1');
+
+          summary.innerHTML = `
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+              </ul>
+            </div>
+          `;
+
+          container.appendChild(summary);
+          summary.focus();
+        }
+      });
+    </script>
+
+  </div>
+</div>
+
+{% endblock %}

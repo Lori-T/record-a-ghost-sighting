@@ -1,0 +1,131 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Expense date – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div id="error-summary-container"></div>
+
+    <h1 class="govuk-heading-l">
+      What date was the lunch expense?
+    </h1>
+
+    <form class="form" id="date-form" novalidate>
+
+      <div class="govuk-form-group" id="date-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+          <!-- Accessibility issue: legend only provides an example, not the actual question -->
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          
+          </legend>
+          <div class="govuk-hint" id="date-hint">
+            For example 12 05 2025
+          </div>
+          <div class="govuk-date-input" id="expense-date">
+            <div class="govuk-date-input__item">
+              <label class="govuk-label govuk-date-input__label" for="day">Day</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="text" pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="govuk-date-input__item">
+              <label class="govuk-label govuk-date-input__label" for="month">Month</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="text" pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="govuk-date-input__item">
+              <label class="govuk-label govuk-date-input__label" for="year">Year</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="text" pattern="[0-9]*" inputmode="numeric">
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      {{ govukButton({ text: "Continue" }) }}
+
+    </form>
+
+    <script>
+      document.getElementById('date-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const errorContainer = document.getElementById('error-summary-container');
+        errorContainer.innerHTML = '';
+        const dateGroup = document.getElementById('date-group');
+        dateGroup.classList.remove('govuk-form-group--error');
+
+        // Clear previous errors
+        document.querySelectorAll('.govuk-input').forEach(el => el.classList.remove('govuk-input--error'));
+        document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
+
+        const day = document.getElementById('day').value.trim();
+        const month = document.getElementById('month').value.trim();
+        const year = document.getElementById('year').value.trim();
+
+        const errors = [];
+
+        if (!day) {
+          errors.push({ fieldId: 'day', message: 'Enter the day' });
+        }
+        if (!month) {
+          errors.push({ fieldId: 'month', message: 'Enter the month' });
+        }
+        if (!year) {
+          errors.push({ fieldId: 'year', message: 'Enter the year' });
+        }
+
+        if (errors.length > 0) {
+          displayErrors(errors);
+        } else {
+          // Simulate successful submission
+          window.location.href = "/question4";
+        }
+
+        function displayErrors(errors) {
+          dateGroup.classList.add('govuk-form-group--error');
+
+          errors.forEach(error => {
+            const input = document.getElementById(error.fieldId);
+            input.classList.add('govuk-input--error');
+            const errorEl = document.createElement('span');
+            errorEl.className = 'govuk-error-message';
+            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
+            input.parentNode.insertBefore(errorEl, input);
+          });
+
+          const summary = document.createElement('div');
+          summary.className = 'govuk-error-summary';
+          summary.setAttribute('aria-labelledby', 'error-summary-title');
+          summary.setAttribute('role', 'alert');
+          summary.setAttribute('tabindex', '-1');
+
+          summary.innerHTML = `
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+              </ul>
+            </div>
+          `;
+
+          errorContainer.appendChild(summary);
+          summary.focus();
+        }
+      });
+    </script>
+
+  </div>
+</div>
+
+{% endblock %}
