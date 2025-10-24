@@ -28,8 +28,8 @@
   {{ govukBreadcrumbs({
     items: [
       { text: "Home", href: "#" },
-      { text: "Department for sustenence", href: "#" },
-      { text: "Claim lunch expenses" }
+      { text: "Record supernatural sightings", href: "#" },
+      { text: "Record a ghost sighting" }
     ]
   }) }}
 {% endblock %}
@@ -41,23 +41,29 @@
       <div class="govuk-heading-xl">{{ serviceName }}</div>
 
       <p class="govuk-body">
-        Use this service to claim money back for lunch expenses incurred during work-related travel or external meetings.
+        Use this service to tell the Department for Supernatural Affairs about a ghost, spirit or haunting you’ve seen.
       </p>
 
-      <p class="govuk-body">You can use this service to claim for:</p>
+      <p class="govuk-body">
+        Your report helps us track supernatural activity and keep communities safe.
+      </p>
+
+      <p class="govuk-body">You can use this service to record:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>meals bought while travelling for work</li>
-        <li>lunches during external meetings</li>
+        <li>a single ghost sighting</li>
+        <li>multiple hauntings in the same location</li>
       </ul>
 
-      <p class="govuk-body">You’ll need:</p>
+      <p class="govuk-body">You’ll need to tell us:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>your personal details</li>
-        <li>details of your expenses</li>
-        <li>photos or scans of your receipts</li>
+        <li>where you saw the ghost</li>
+        <li>when you saw it</li>
+        <li>what it looked like (if you could tell)</li>
       </ul>
 
-      <p>Submitting a claim takes around 5 minutes.</p>
+      <p>
+        Do not use this service to report other paranormal activity, such as vampires, werewolves or cursed pumpkins.
+      </p>
 
       {{ govukButton({
         text: "Start now",
@@ -65,11 +71,10 @@
         isStartButton: true
       }) }}
 
-      <h1 class="govuk-heading-m"     >Before you start</h1>
+      <h1 class="govuk-heading-m">Other ways to submit a ghost sighting</h1>
 
-      <p>You can also <a href="mailto:claims@claims.com">submit your claim by email</a>.</p>
-      <p>The online service is also <a href="#">available in Welsh (ar gael yn Gymraeg)</a>.</p>
-
+      <p>You can also <a href="mailto:hauntings@dsa.gov.uk">submit your sighting by email</a>.</p>
+     
     </div>
 
     <div class="govuk-grid-column-one-third">
@@ -78,15 +83,15 @@
         <nav role="navigation" aria-labelledby="subsection-title">
           <ul class="govuk-list govuk-!-font-size-16">
             <li>
-              <a href="/guidance1" class="no-focus-outline">Things you can't claim for</a>
+              <a href="/guidance1" class="no-focus-outline">How to spot a ghost</a>
             </li>
-            <li>
-              <a href="https://www.gov.uk/tax-relief-for-employees" target="_blank" class="govuk-!-font-weight-bold no-focus-outline">
-                Find out more <span class="govuk-visually-hidden">in Subsection</span>
+             <li>
+                             <a href="#" target="_blank" class="govuk-!-font-weight-bold no-focus-outline">
+                Find out more
               </a>
             </li>
             <li>
-              <a href="/guidance" class="no-focus-outline">Allowed lunch items</a>
+              <a href="/guidance" class="no-focus-outline">Known haunted locations in the UK</a>
             </li>
           </ul>
         </nav>

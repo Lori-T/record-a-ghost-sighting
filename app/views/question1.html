@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Blank 
+  Witness details – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -12,44 +12,38 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <div id="error-summary-container"></div>
 
     <h1 class="govuk-heading-l">
-      Your details
+   Ghost spotter details
     </h1>
 
     <form class="form" id="details-form" novalidate>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          Personal information
+          Tell us about you, the witness of the ghost sighting
         </legend>
 
         <div class="govuk-form-group" id="name-group">
           <label class="govuk-label" for="full-name">Full name</label>
-          <input class="govuk-input" id="full-name" name="full-name" type="text">
-        </div>
-
-        <div class="govuk-form-group" id="staff-id-group">
-          <label class="govuk-label" for="staff-id">Staff ID</label>
-          <div id="staff-id-hint" class="govuk-hint" style="color: #aaa;">
-            You can find this on your work pass
-          </div>
-          <input class="govuk-input" id="staff-id" name="staff-id" type="text" aria-describedby="staff-id-hint">
+          <input class="govuk-input" id="full-name" name="full-name" type="text" placeholder="for example, Casper the Friendly Ghost">
         </div>
 
         <div class="govuk-form-group" id="email-group">
           <label class="govuk-label" for="email">Email address</label>
-          <input class="govuk-input" id="email" name="email" type="email">
+          <input class="govuk-input" id="email" name="email" type="email" placeholder="phantom@example.com">
         </div>
       </fieldset>
 
+      <!-- Intentional accessibility issues for training -->
+      <a href="/question2" id="ghost-link" style="position: absolute; width: 0; height: 0; overflow: hidden;">I am watching you…</a>
+
       <!-- Continue button intentionally not keyboard focusable -->
       <button class="govuk-button" type="submit" tabindex="-1">
-        Continue
+        Continue into the unknown
       </button>
     </form>
 
@@ -59,7 +53,7 @@
 
         // Clear previous errors
         document.getElementById('error-summary-container').innerHTML = '';
-        ['name', 'staff-id', 'email'].forEach(function (id) {
+        ['name', 'email'].forEach(function (id) {
           const group = document.getElementById(id + '-group');
           group.classList.remove('govuk-form-group--error');
           const oldError = document.querySelector(`#${id}-group .govuk-error-message`);
@@ -70,23 +64,16 @@
         const errors = [];
 
         const fullName = document.getElementById('full-name');
-        const staffId = document.getElementById('staff-id');
         const email = document.getElementById('email');
 
         if (!fullName.value.trim()) {
-          addError('name-group', 'full-name', 'Enter your full name');
-        }
-
-        if (!staffId.value.trim()) {
-          addError('staff-id-group', 'staff-id', 'Enter your staff ID');
-        } else if (!/^\d{5}$/.test(staffId.value.trim())) {
-          addError('staff-id-group', 'staff-id', 'Enter your staff ID in the correct format, it should be five numbers.');
+          addError('name-group', 'full-name', 'A ghost spotter name is required');
         }
 
         if (!email.value.trim()) {
-          addError('email-group', 'email', 'Enter your email address');
+          addError('email-group', 'email', 'We need your phantom email');
         } else if (!/^\S+@\S+\.\S+$/.test(email.value)) {
-          addError('email-group', 'email', 'Enter an email address in the correct format, for example, name@example.com');
+          addError('email-group', 'email', 'Enter a proper spectral email, e.g. phantom@example.com');
         }
 
         if (errors.length > 0) {
@@ -95,7 +82,6 @@
         }
 
         if (!hasError) {
-          // Simulate successful submission
           window.location.href = "/question2";
         }
 
@@ -116,10 +102,9 @@
           summary.setAttribute('aria-labelledby', 'error-summary-title');
           summary.setAttribute('role', 'alert');
           summary.setAttribute('tabindex', '-1');
-
           summary.innerHTML = `
             <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
+              Something spooky is missing
             </h2>
             <div class="govuk-error-summary__body">
               <ul class="govuk-list govuk-error-summary__list">
@@ -127,14 +112,11 @@
               </ul>
             </div>
           `;
-
           container.appendChild(summary);
           summary.focus();
         }
       });
     </script>
-
   </div>
 </div>
-
 {% endblock %}

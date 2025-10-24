@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Lunch expense details – {{ serviceName }} – GOV.UK Prototype Kit
+  Sighting details – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -18,47 +18,42 @@
       <div id="error-summary-container"></div>
 
       <h1 class="govuk-heading-l">
-        What did you buy for lunch?
+        What did you see?
       </h1>
 
  <form class="form" action="/checkanswers" method="post">
-  
+
   {{ govukCharacterCount({
-    name: "lunchItems",
-    id: "lunchItems",
+    name: "sightingDescription",
+    id: "sightingDescription",
     maxlength: 200,
     label: {
-      text: "List the lunch items you bought"
+      text: "Describe what the ghost looked like or what happened, you can upload a photograph or drawing later in the service."
     },
     hint: {
       text: "You can enter up to 200 characters"
     },
     textarea: {
-      placeholder: "e.g. sandwich, crisps and drink",
+      placeholder: "e.g. floating figure in white, cold breeze, flickering lights",
       rows: 5
     }
   }) }}
 
-  <!-- Tabbable visually hidden link -->
   <a href="#" class="govuk-visually-hidden govuk-focusable" tabindex="0">
-    Where did you buy the lunch from?
+    Where did this happen?
   </a>
 
   {{ govukInput({
     label: {
-      text: "How much did it cost?"
+      text: "Where did the sighting happen?"
     },
     hint: {
-      text: "Enter the amount in pounds and pence"
+      text: "Enter the location or address"
     },
-    classes: "govuk-input--width-5",
-    id: "lunchCost",
-    name: "lunchCost",
-    type: "text",
-    spellcheck: false,
-    prefix: {
-      text: "£"
-    }
+    classes: "govuk-input--width-20",
+    id: "sightingLocation",
+    name: "sightingLocation",
+    type: "text"
   }) }}
 
   {{ govukButton({
@@ -66,81 +61,6 @@
   }) }}
 
 </form>
-
-
-
-      <script>
-        document.getElementById('lunch-form').addEventListener('submit', function (event) {
-          event.preventDefault();
-
-          const errorContainer = document.getElementById('error-summary-container');
-          errorContainer.innerHTML = '';
-
-          const lunchItems = document.getElementById('lunchItems');
-          const lunchCost = document.getElementById('lunchCost');
-
-          const lunchItemsGroup = document.getElementById('lunchItems-group');
-          const lunchCostGroup = document.getElementById('lunchCost-group');
-
-          // Reset errors
-          [lunchItemsGroup, lunchCostGroup].forEach(group => group.classList.remove('govuk-form-group--error'));
-          [lunchItems, lunchCost].forEach(input => input.classList.remove('govuk-input--error', 'govuk-textarea--error'));
-          document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
-
-          const errors = [];
-
-          if (!lunchItems.value.trim()) {
-            errors.push({ fieldId: 'lunchItems', message: 'Enter what you bought for lunch' });
-          }
-
-          if (!lunchCost.value.trim()) {
-            errors.push({ fieldId: 'lunchCost', message: 'Enter how much it cost' });
-          } else if (!/^\d+(\.\d{1,2})?$/.test(lunchCost.value.trim())) {
-            errors.push({ fieldId: 'lunchCost', message: 'Enter a valid amount in pounds and pence' });
-          }
-
-          if (errors.length > 0) {
-            showErrors(errors);
-          } else {
-            window.location.href = "/checkanswers";
-          }
-
-          function showErrors(errors) {
-            const summary = document.createElement('div');
-            summary.className = 'govuk-error-summary';
-            summary.setAttribute('aria-labelledby', 'error-summary-title');
-            summary.setAttribute('role', 'alert');
-            summary.setAttribute('tabindex', '-1');
-            summary.innerHTML = `
-              <h2 class="govuk-error-summary__title" id="error-summary-title">
-                There is a problem
-              </h2>
-              <div class="govuk-error-summary__body">
-                <ul class="govuk-list govuk-error-summary__list">
-                  ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-                </ul>
-              </div>
-            `;
-            errorContainer.appendChild(summary);
-            summary.focus();
-
-            errors.forEach(error => {
-              const input = document.getElementById(error.fieldId);
-              const group = document.getElementById(`${error.fieldId}-group`);
-              group.classList.add('govuk-form-group--error');
-              input.classList.add(input.tagName === 'TEXTAREA' ? 'govuk-textarea--error' : 'govuk-input--error');
-              const errorMessage = document.createElement('span');
-              errorMessage.className = 'govuk-error-message';
-              errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
-              const errorContainer = document.getElementById(`${error.fieldId}-error-container`);
-if (errorContainer) {
-  errorContainer.appendChild(errorMessage);
-}
-
-            });
-          }
-        });
-      </script>
 
     </div>
   </div>
