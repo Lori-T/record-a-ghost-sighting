@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Date of sighting – {{ serviceName }} – GOV.UK Prototype Kit
+  Date and location of sighting – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -18,14 +18,14 @@
     <div id="error-summary-container"></div>
 
     <h1 class="govuk-heading-l">
-      When did the ghost appear?
+      When and where did the ghost appear?
     </h1>
 
     <form class="form" id="date-form" novalidate>
 
       <div class="govuk-form-group" id="date-group">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
-          <!-- Accessibility issue: legend missing question -->
+          <!-- Accessibility issue: legend missing question text -->
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           </legend>
           <div class="govuk-hint" id="date-hint">
@@ -48,6 +48,14 @@
         </fieldset>
       </div>
 
+      <div class="govuk-form-group" id="location-group">
+        <label class="govuk-label" for="sightingLocation">Where did the sighting happen?</label>
+        <div id="location-hint" class="govuk-hint">
+          Enter the location, address or place name
+        </div>
+        <input class="govuk-input govuk-input--width-20" id="sightingLocation" name="sightingLocation" type="text" aria-describedby="location-hint">
+      </div>
+
       {{ govukButton({ text: "Continue" }) }}
 
     </form>
@@ -59,38 +67,31 @@
         const errorContainer = document.getElementById('error-summary-container');
         errorContainer.innerHTML = '';
         const dateGroup = document.getElementById('date-group');
+        const locationGroup = document.getElementById('location-group');
         dateGroup.classList.remove('govuk-form-group--error');
-
+        locationGroup.classList.remove('govuk-form-group--error');
         document.querySelectorAll('.govuk-input').forEach(el => el.classList.remove('govuk-input--error'));
         document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
 
         const day = document.getElementById('day').value.trim();
         const month = document.getElementById('month').value.trim();
         const year = document.getElementById('year').value.trim();
+        const location = document.getElementById('sightingLocation').value.trim();
 
         const errors = [];
 
         if (!day) errors.push({ fieldId: 'day', message: 'Enter the day' });
         if (!month) errors.push({ fieldId: 'month', message: 'Enter the month' });
         if (!year) errors.push({ fieldId: 'year', message: 'Enter the year' });
+        if (!location) errors.push({ fieldId: 'sightingLocation', message: 'Enter where you saw the ghost' });
 
         if (errors.length > 0) {
           displayErrors(errors);
         } else {
-          window.location.href = "/question5";
+          window.location.href = "/question4";
         }
 
         function displayErrors(errors) {
-          dateGroup.classList.add('govuk-form-group--error');
-          errors.forEach(error => {
-            const input = document.getElementById(error.fieldId);
-            input.classList.add('govuk-input--error');
-            const errorEl = document.createElement('span');
-            errorEl.className = 'govuk-error-message';
-            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
-            input.parentNode.insertBefore(errorEl, input);
-          });
-
           const summary = document.createElement('div');
           summary.className = 'govuk-error-summary';
           summary.setAttribute('aria-labelledby', 'error-summary-title');
@@ -108,6 +109,17 @@
           `;
           errorContainer.appendChild(summary);
           summary.focus();
+
+          errors.forEach(error => {
+            const input = document.getElementById(error.fieldId);
+            input.classList.add('govuk-input--error');
+            const group = input.closest('.govuk-form-group');
+            group.classList.add('govuk-form-group--error');
+            const errorMessage = document.createElement('span');
+            errorMessage.className = 'govuk-error-message';
+            errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
+            input.parentNode.insertBefore(errorMessage, input);
+          });
         }
       });
     </script>

@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Record a ghost sighting – GOV.UK Prototype Kit
+  Upload your ghost evidence – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -15,109 +15,38 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <div id="error-summary-container"></div>
-
     <h1 class="govuk-heading-l spooky-heading">
-      What happened during the haunting?
+      Upload your ghost evidence
     </h1>
 
-    <p class="govuk-body">
-      Tell us more about the supernatural activity you experienced.  
-      You can include any strange sounds, smells, or spectral movements.
-    </p>
+    <p>Send us your proof — a photo, video, EVP recording, or haunted artefact log.</p>
 
-    <!-- Intentionally missing legend/fieldset -->
-    <form id="haunting-form" method="post" action="/checkanswers" novalidate>
-
-      <div class="govuk-form-group" id="activityDetails-group">
-        <label class="govuk-label" for="activityDetails">
-          Describe what happened
+    <form id="upload-form" novalidate enctype="multipart/form-data">
+      <!-- Accessibility issue: label not correctly linked to input -->
+      <div class="govuk-form-group">
+        <label class="govuk-label">
+          Choose a file (optional)
         </label>
-        <textarea class="govuk-textarea" id="activityDetails" name="activityDetails" rows="5"
-          placeholder="For example: whispering voices, cold spots, furniture shaking"></textarea>
+        <input class="govuk-file-upload" id="ghostFile" name="ghostFile" type="file">
       </div>
 
-      <div class="govuk-form-group" id="evidence-group">
-        <label class="govuk-label" for="evidence">Do you have any evidence?</label>
-        <!-- Missing fieldset for radios -->
-        <div class="govuk-radios no-fieldset">
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="evidence-yes" name="evidence" type="radio" value="yes">
-            <label class="govuk-label govuk-radios__label" for="evidence-yes">
-              Yes – I have photographic or video evidence
-            </label>
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="evidence-no" name="evidence" type="radio" value="no">
-            <label class="govuk-label govuk-radios__label" for="evidence-no">
-              No – I didn’t capture anything
-            </label>
-          </div>
-        </div>
+      <div class="govuk-form-group">
+        <p class="govuk-hint" style="color: #666">Files will vanish after upload. Probably.</p>
       </div>
 
-      <!-- Continue button intentionally vague and not properly labelled -->
-      <button class="govuk-button ghost-button" type="submit">
-        Continue your haunting
+      <button class="govuk-button govuk-button--start ghost-button" data-module="govuk-button" type="submit">
+        Continue
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
+             viewBox="0 0 33 40" role="presentation" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+        </svg>
       </button>
-
     </form>
 
     <script>
-      document.getElementById('haunting-form').addEventListener('submit', function (event) {
+      document.getElementById('upload-form').addEventListener('submit', function (event) {
         event.preventDefault();
-
-        const errorContainer = document.getElementById('error-summary-container');
-        const activityGroup = document.getElementById('activityDetails-group');
-        const evidenceGroup = document.getElementById('evidence-group');
-        errorContainer.innerHTML = '';
-
-        activityGroup.classList.remove('govuk-form-group--error');
-        evidenceGroup.classList.remove('govuk-form-group--error');
-        document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
-
-        const description = document.getElementById('activityDetails').value.trim();
-        const evidence = document.querySelector('input[name="evidence"]:checked');
-        const errors = [];
-
-        if (!description) {
-          errors.push({ fieldId: 'activityDetails', message: 'Describe what happened during the haunting' });
-          activityGroup.classList.add('govuk-form-group--error');
-        }
-
-        if (!evidence) {
-          errors.push({ fieldId: 'evidence-yes', message: 'Select whether you have evidence' });
-          evidenceGroup.classList.add('govuk-form-group--error');
-        }
-
-        if (errors.length > 0) {
-          displayErrors(errors);
-        } else {
-          // Store in session and redirect to check answers
-          const evidenceVal = evidence ? evidence.value : '';
-          fetch('/checkanswers', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'activityDetails=' + encodeURIComponent(description) + '&evidence=' + encodeURIComponent(evidenceVal)
-          }).then(() => window.location.href = '/checkanswers');
-        }
-
-        function displayErrors(errors) {
-          const summary = document.createElement('div');
-          summary.className = 'govuk-error-summary';
-          summary.setAttribute('role', 'alert');
-          summary.setAttribute('tabindex', '-1');
-          summary.innerHTML = `
-            <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-              </ul>
-            </div>
-          `;
-          errorContainer.appendChild(summary);
-          summary.focus();
-        }
+        window.location.href = '/checkanswers';
       });
     </script>
 

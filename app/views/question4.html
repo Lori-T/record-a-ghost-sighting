@@ -1,13 +1,13 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Date of sighting – {{ serviceName }} – GOV.UK Prototype Kit
+  Description of sighting – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "javascript:window.history.back()"
+    href: "question3"
   }) }}
 {% endblock %}
 
@@ -17,85 +17,52 @@
 
     <div id="error-summary-container"></div>
 
-    <h1 class="govuk-heading-l">
-      When did the ghost appear?
+    <h1 class="govuk-heading-l spooky-heading">
+      What did you see?
     </h1>
 
-    <!-- Added method and action for session saving -->
-    <form class="form" id="date-form" method="post" action="/question5" novalidate>
+    <p>Describe what the ghost looked like or what happened.</p>
 
-      <div class="govuk-form-group" id="date-group">
-        <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
-          <!-- Accessibility issue: legend missing question -->
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m"></legend>
-
-          <div class="govuk-hint" id="date-hint">
-            For example 31 10 2025
-          </div>
-
-          <div class="govuk-date-input" id="sighting-date">
-            <div class="govuk-date-input__item">
-              <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                     id="day" name="day" type="text">
-            </div>
-            <div class="govuk-date-input__item">
-              <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                     id="month" name="month" type="text">
-            </div>
-            <div class="govuk-date-input__item">
-              <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                     id="year" name="year" type="text">
-            </div>
-          </div>
-        </fieldset>
+    <!-- Intentionally missing character count functionality -->
+    <form id="description-form" novalidate>
+      <div class="govuk-form-group" id="description-group">
+        <label class="govuk-label" for="sightingDescription">
+          Description of the ghost
+        </label>
+        <textarea class="govuk-textarea" id="sightingDescription" name="sightingDescription" rows="5"
+          placeholder="For example, a tall, pale figure with glowing eyes..."></textarea>
       </div>
 
-      {{ govukButton({ text: "Continue" }) }}
+      <button class="govuk-button" data-module="govuk-button" type="submit">
+        Continue
+      </button>
     </form>
 
     <script>
-      document.getElementById('date-form').addEventListener('submit', function (event) {
+      document.getElementById('description-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const errorContainer = document.getElementById('error-summary-container');
         errorContainer.innerHTML = '';
-        const dateGroup = document.getElementById('date-group');
-        dateGroup.classList.remove('govuk-form-group--error');
+        const group = document.getElementById('description-group');
+        group.classList.remove('govuk-form-group--error');
+        const oldError = document.querySelector('#description-group .govuk-error-message');
+        if (oldError) oldError.remove();
 
-        document.querySelectorAll('.govuk-input').forEach(el => el.classList.remove('govuk-input--error'));
-        document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
-
-        const day = document.getElementById('day').value.trim();
-        const month = document.getElementById('month').value.trim();
-        const year = document.getElementById('year').value.trim();
-
+        const description = document.getElementById('sightingDescription').value.trim();
         const errors = [];
 
-        if (!day) errors.push({ fieldId: 'day', message: 'Enter the day' });
-        if (!month) errors.push({ fieldId: 'month', message: 'Enter the month' });
-        if (!year) errors.push({ fieldId: 'year', message: 'Enter the year' });
-
-        if (errors.length > 0) {
-          displayErrors(errors);
-        } else {
-          // Actually submit to server to save session data
-          event.target.submit();
+        if (!description) {
+          const message = 'Enter a description of the ghost';
+          group.classList.add('govuk-form-group--error');
+          const errorEl = document.createElement('p');
+          errorEl.className = 'govuk-error-message';
+          errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + message;
+          group.prepend(errorEl);
+          errors.push({ fieldId: 'sightingDescription', message });
         }
 
-        function displayErrors(errors) {
-          dateGroup.classList.add('govuk-form-group--error');
-          errors.forEach(error => {
-            const input = document.getElementById(error.fieldId);
-            input.classList.add('govuk-input--error');
-            const errorEl = document.createElement('span');
-            errorEl.className = 'govuk-error-message';
-            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
-            input.parentNode.insertBefore(errorEl, input);
-          });
-
+        if (errors.length > 0) {
           const summary = document.createElement('div');
           summary.className = 'govuk-error-summary';
           summary.setAttribute('aria-labelledby', 'error-summary-title');
@@ -113,6 +80,8 @@
           `;
           errorContainer.appendChild(summary);
           summary.focus();
+        } else {
+          window.location.href = '/question5';
         }
       });
     </script>

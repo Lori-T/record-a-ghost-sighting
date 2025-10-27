@@ -8,11 +8,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% set reference = "GHO" + (data['full-name'] or '000') %}
-    {% set reference = reference | slice(0,6) | upper %}
     {{ govukPanel({
       titleText: "REPORT COMPLETE",
-      html: "YOUR REFERENCE NUMBER:<br><strong>" + reference + "25</strong>"
+      html: "YOUR REFERENCE NUMBER:<br><strong>GHO12325</strong>"
     }) }}
 
     <p class="govuk-body">

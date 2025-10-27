@@ -21,63 +21,80 @@
       What type of ghost sighting are you reporting?
     </h1>
 
-    <!-- Added method and action so data is saved -->
+    <!-- Accessibility issue: checkboxes not wrapped in fieldset or legend, breaking context for screen readers -->
     <form class="form" id="sighting-form" method="post" action="/question3" novalidate>
 
-      <div class="govuk-form-group" id="radios-group">
-        <!-- Accessibility issue: radios not wrapped in fieldset or legend -->
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="apparition" name="sighting-type" type="radio" value="Apparition">
-          <label class="govuk-label govuk-radios__label" for="apparition">Full-bodied apparition</label>
+      <div class="govuk-form-group" id="checkbox-group">
+
+        <div class="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="apparition" name="sighting-type" type="checkbox" value="Apparition">
+            <label class="govuk-label govuk-checkboxes__label" for="apparition">
+              Full-bodied apparition
+            </label>
+          </div>
+
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="poltergeist" name="sighting-type" type="checkbox" value="Poltergeist">
+            <label class="govuk-label govuk-checkboxes__label" for="poltergeist">
+              Poltergeist activity
+            </label>
+          </div>
+
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="shadow" name="sighting-type" type="checkbox" value="Shadow">
+            <label class="govuk-label govuk-checkboxes__label" for="shadow">
+              Shadowy presence
+            </label>
+          </div>
+
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="mist" name="sighting-type" type="checkbox" value="Misty figure">
+            <label class="govuk-label govuk-checkboxes__label" for="mist">
+              Misty figure or glowing form
+            </label>
+          </div>
         </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="poltergeist" name="sighting-type" type="radio" value="Poltergeist">
-          <label class="govuk-label govuk-radios__label" for="poltergeist">Poltergeist activity</label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="shadow" name="sighting-type" type="radio" value="Shadow">
-          <label class="govuk-label govuk-radios__label" for="shadow">Shadowy presence</label>
-        </div>
+
       </div>
 
       {{ govukButton({ text: "Continue" }) }}
+
     </form>
 
     <script>
       document.getElementById('sighting-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Reset errors
-        document.getElementById('error-summary-container').innerHTML = '';
-        const radiosGroup = document.getElementById('radios-group');
-        radiosGroup.classList.remove('govuk-form-group--error');
-        const oldError = document.querySelector('#radios-group .govuk-error-message');
+        const errorContainer = document.getElementById('error-summary-container');
+        const checkboxGroup = document.getElementById('checkbox-group');
+        errorContainer.innerHTML = '';
+        checkboxGroup.classList.remove('govuk-form-group--error');
+
+        const oldError = document.querySelector('#checkbox-group .govuk-error-message');
         if (oldError) oldError.remove();
 
-        let hasError = false;
-        const selected = document.querySelector('input[name="sighting-type"]:checked');
+        const selected = document.querySelectorAll('input[name="sighting-type"]:checked');
         const errors = [];
 
-        if (!selected) {
-          const errorMessage = 'Select a type of ghost sighting';
-          radiosGroup.classList.add('govuk-form-group--error');
+        if (selected.length === 0) {
+          const errorMessage = 'Select at least one type of ghost sighting';
+          checkboxGroup.classList.add('govuk-form-group--error');
           const errorEl = document.createElement('p');
           errorEl.className = 'govuk-error-message';
           errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
-          radiosGroup.prepend(errorEl);
+          checkboxGroup.prepend(errorEl);
           errors.push({ fieldId: 'apparition', message: errorMessage });
-          hasError = true;
         }
 
-        if (hasError) {
+        if (errors.length > 0) {
           displayErrorSummary(errors);
         } else {
-          // Actually submit to server so it stores in session
+          // Store selection and continue
           event.target.submit();
         }
 
         function displayErrorSummary(errors) {
-          const container = document.getElementById('error-summary-container');
           const summary = document.createElement('div');
           summary.className = 'govuk-error-summary';
           summary.setAttribute('aria-labelledby', 'error-summary-title');
@@ -93,7 +110,7 @@
               </ul>
             </div>
           `;
-          container.appendChild(summary);
+          errorContainer.appendChild(summary);
           summary.focus();
         }
       });
