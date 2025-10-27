@@ -1,97 +1,69 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Mainstream guide example
+  How to spot a ghost – Department for Supernatural Affairs
 {% endblock %}
 
 {% block header %}
-  <!-- Blank header with no service name for this page -->
-  {{ govukHeader() }}
+  {{ govukHeader({ serviceName: "Department for Supernatural Affairs" }) }}
 {% endblock %}
 
 {% block beforeContent %}
-
   {{ govukBreadcrumbs({
     items: [
-      {
-        text: "Home",
-        href: "#"
-      },
-      {
-        text: "Department for sustenence",
-        href: "#"
-      },
-      {
-        text: "Claim lunch expenses"
-      }
+      { text: "Home", href: "#" },
+      { text: "Guidance", href: "#" },
+      { text: "How to spot a ghost" }
     ]
   }) }}
-
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-      Lunch expenses
-      </h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-      <aside class="govuk-prototype-kit-common-templates-mainstream-guide-contents-list" role="complementary">
-        <nav class="govuk-prototype-kit-common-templates-contents-list" aria-label="Pages in this guide" role="navigation">
-          <h2 class="govuk-prototype-kit-common-templates-contents-list__title">
-            Contents
-          </h2>
-          <ol class="govuk-prototype-kit-common-templates-contents-list__list">
-            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed govuk-prototype-kit-common-templates-contents-list__list-item--active">
-              <a href="#">
-                Expenses you can claim
-              </a>
-            </li>
-            <li aria-current="true" class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
-              Expenses you can't claim
-            </li>
-            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
-              <a href="#">
-                Submit a claim and get reimbursed
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </aside>
-    </div>
-  </div>
+    <h1 class="govuk-heading-xl spooky-heading">How to spot a ghost</h1>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds govuk-prototype-kit-common-templates-mainstream-guide-body">
-
-      <h2 class="govuk-heading-m">Expenses you can claim</h2>
-
-      <p>You can claim reasonable lunch expenses when travelling for work or attending meetings away from your normal workplace.</p>
-
-      <h3 class="govuk-heading-s">Allowed items</h3>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>sandwiches, wraps or salads</li>
-        <li>non-alcoholic drinks, such as water, tea, coffee or juice</li>
-        <li>meal deals up to £7</li>
-        <li>hot food from a café or supermarket as part of a working day</li>
-      </ul>
-
-      <p>If you're not sure whether an item is claimable, check the full staff expenses policy or ask your manager.</p>
-
-      <nav class="govuk-prototype-kit-common-templates-pagination" role="navigation" aria-label="Pagination">
-        {{ govukPagination({
-         
-          next: {
-            labelText: "How to submit a claim",
-            href: "/guidance1"
-          }
-        }) }}
+    <aside class="govuk-prototype-kit-common-templates-mainstream-guide-contents-list" role="complementary">
+      <nav class="govuk-prototype-kit-common-templates-contents-list" aria-label="Pages in this guide">
+        <h2 class="govuk-prototype-kit-common-templates-contents-list__title">Contents</h2>
+        <ol class="govuk-prototype-kit-common-templates-contents-list__list">
+          <li aria-current="true" class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            How to spot a ghost
+          </li>
+          <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            <a href="/guidance1">Different types of haunting</a>
+          </li>
+          <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            <a href="/guidance2">How to report a haunting</a>
+          </li>
+        </ol>
       </nav>
+    </aside>
 
-      <p>
-        <a href="#">View a printable version of the whole guide</a>
-      </p>
+    <h2 class="govuk-heading-m">Common signs of ghostly presence</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>unexplained temperature drops (especially sudden chills)</li>
+      <li>whispering or faint crying where no one is present</li>
+      <li>objects moving or tilting on their own</li>
+      <li>flickering candles or lights with no electrical fault</li>
+      <li>a strong smell of old perfume, tobacco or damp air from nowhere</li>
+    </ul>
 
-    </div>
+    <p>If you experience these signs, remain calm.  
+    Many hauntings are simply passing visitations or echoes of restless energy.</p>
+
+    <nav class="govuk-prototype-kit-common-templates-pagination" role="navigation" aria-label="Pagination">
+      {{ govukPagination({
+        next: {
+          labelText: "Different types of haunting",
+          href: "/guidance1"
+        }
+      }) }}
+    </nav>
+
+    <p><a href="#">View printable version of the guide</a></p>
+
   </div>
+</div>
 {% endblock %}

@@ -1,100 +1,76 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Mainstream guide example
+  How to report a haunting – Department for Supernatural Affairs
 {% endblock %}
 
 {% block header %}
-  <!-- Blank header with no service name for this page -->
-  {{ govukHeader() }}
+  {{ govukHeader({ serviceName: "Department for Supernatural Affairs" }) }}
 {% endblock %}
 
 {% block beforeContent %}
-
   {{ govukBreadcrumbs({
     items: [
-      {
-        text: "Home",
-        href: "#"
-      },
-      {
-        text: "Department for sustenence",
-        href: "#"
-      },
-      {
-        text: "Claim lunch expenses"
-      }
+      { text: "Home", href: "#" },
+      { text: "Guidance", href: "#" },
+      { text: "How to report a haunting" }
     ]
   }) }}
-
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        Lunch expenses
-      </h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-      <aside class="govuk-prototype-kit-common-templates-mainstream-guide-contents-list" role="complementary">
-        <nav class="govuk-prototype-kit-common-templates-contents-list" aria-label="Pages in this guide" role="navigation">
-          <h2 class="govuk-prototype-kit-common-templates-contents-list__title">
-            Contents
-          </h2>
-          <ol class="govuk-prototype-kit-common-templates-contents-list__list">
-            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed govuk-prototype-kit-common-templates-contents-list__list-item--active">
-              <a href="#">
-                Expenses you can claim
-              </a>
-            </li>
-            <li aria-current="true" class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
-              Expenses you can't claim
-            </li>
-            <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
-              <a href="#">
-                Submit a claim and get reimbursed
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </aside>
-    </div>
-  </div>
+    <h1 class="govuk-heading-xl spooky-heading">How to report a haunting</h1>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds govuk-prototype-kit-common-templates-mainstream-guide-body">
-
-      <h2 class="govuk-heading-m"> Submit a claim and get reimbursed</h2>
-
-      <p>You can <a href="/start">start your claim online</a>, or you can submit by email.</p>
-
-      <h3 class="govuk-heading-s">You need to provide:</h3>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>details the expense</li>
-        <li>date of the expense</li>
-        <li>receipts showing item, price and date</li>
-      </ul>
-
-          <p>If you're not sure whether an item can be reimbursed, check the full staff expenses policy or ask your manager.</p>
-
-          <h3 class="govuk-heading-s">You need to provide:</h3>
-<p>Once your reciepts are uploaded should receive a decision within 5 working days, payment will be made to the bank details on your work profile.</p>
-      <nav class="govuk-prototype-kit-common-templates-pagination" role="navigation" aria-label="Pagination">
-        {{ govukPagination({
-          previous: {
-            labelText: "How to claim",
-            href: "/guidance1"
-          }
-        
-        }) }}
+    <aside class="govuk-prototype-kit-common-templates-mainstream-guide-contents-list" role="complementary">
+      <nav class="govuk-prototype-kit-common-templates-contents-list" aria-label="Pages in this guide">
+        <h2 class="govuk-prototype-kit-common-templates-contents-list__title">Contents</h2>
+        <ol class="govuk-prototype-kit-common-templates-contents-list__list">
+          <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            <a href="/guidance">How to spot a ghost</a>
+          </li>
+          <li class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            <a href="/guidance1">Different types of haunting</a>
+          </li>
+          <li aria-current="true" class="govuk-prototype-kit-common-templates-contents-list__list-item govuk-prototype-kit-common-templates-contents-list__list-item--dashed">
+            How to report a haunting
+          </li>
+        </ol>
       </nav>
+    </aside>
 
-      <p>
-        <a href="#">View a printable version of the whole guide</a>
-      </p>
+    <h2 class="govuk-heading-m">How to make a report</h2>
 
-    </div>
+    <p>You can <a href="/start">record your ghost sighting online</a>, or send your report through secure ectoplasmic channels (email).</p>
 
-    
+    <h3 class="govuk-heading-s">You’ll need to provide</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your full name and contact email</li>
+      <li>the type of ghost or activity you witnessed</li>
+      <li>the date, time and location of the incident</li>
+      <li>a short description of what happened</li>
+      <li>any photographic or spectral evidence (optional)</li>
+    </ul>
+
+    <p>Once submitted, your report will be reviewed by an authorised investigator.  
+    Most hauntings are processed within <strong>5 working nights</strong>.</p>
+
+    <p>If activity increases or becomes dangerous (for example, levitating furniture or spectral possession),  
+    please contact your local <strong>Emergency Ghost Response Unit</strong>.</p>
+
+    <nav class="govuk-prototype-kit-common-templates-pagination" role="navigation" aria-label="Pagination">
+      {{ govukPagination({
+        previous: {
+          labelText: "Different types of haunting",
+          href: "/guidance1"
+        }
+      }) }}
+    </nav>
+
+    <p><a href="#">View printable version of the guide</a></p>
+
   </div>
+</div>
 {% endblock %}
