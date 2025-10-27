@@ -35,36 +35,29 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row tab-order-sim">
-    <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-      <div class="govuk-heading-xl">{{ serviceName }}</div>
+    <h1 class="govuk-heading-xl spooky-heading">Record a ghost sighting</h1>
 
-      <p class="govuk-body">
-        Use this service to tell the Department for Supernatural Affairs about a ghost, spirit or haunting you’ve seen.
-      </p>
+    <p class="govuk-body">Use this service to tell the <strong>Department for Supernatural Affairs</strong> about a ghost, spirit or haunting you’ve seen.</p>
+    <p>Your report helps us track supernatural activity and keep communities safe.</p>
 
-      <p class="govuk-body">
-        Your report helps us track supernatural activity and keep communities safe.
-      </p>
+    <h2 class="govuk-heading-m">You can use this service to record:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a single ghost sighting</li>
+      <li>multiple hauntings in the same location</li>
+    </ul>
 
-      <p class="govuk-body">You can use this service to record:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>a single ghost sighting</li>
-        <li>multiple hauntings in the same location</li>
-      </ul>
+    <h2 class="govuk-heading-m">You’ll need to tell us:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>where you saw the ghost</li>
+      <li>when you saw it</li>
+      <li>what it looked like (if you could tell)</li>
+    </ul>
 
-      <p class="govuk-body">You’ll need to tell us:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>where you saw the ghost</li>
-        <li>when you saw it</li>
-        <li>what it looked like (if you could tell)</li>
-      </ul>
-
-      <p>
-        Do not use this service to report other paranormal activity, such as vampires, werewolves or cursed pumpkins.
-      </p>
-
+    <p class="govuk-body">Do not use this service to report other paranormal activity, such as vampires, werewolves or cursed pumpkins.</p>
+      
       {{ govukButton({
         text: "Start now",
         href: "/question1",

@@ -1,59 +1,91 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Task list – {{ serviceName }} – GOV.UK Prototype Kit
+  Your tasks – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">{{ serviceName }}</h1>
+    <h1 class="govuk-heading-xl">
+      Your account
+    </h1>
 
-      <h2 class="govuk-heading-m">Your tasks</h2>
+    <p class="govuk-body">
+      Welcome back{% if data['full-name'] %}, <strong>{{ data['full-name'] }}</strong>{% endif %}.
+    </p>
 
-      {% set completedStatus = {
-        text: "Completed"
-      } %}
+    {% if data['email'] %}
+      <p class="govuk-body">Your registered email: {{ data['email'] }}</p>
+    {% endif %}
 
-      {% set incompleteStatus = {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      } %}
+    <h2 class="govuk-heading-m">Your recent sightings</h2>
 
-      {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Date</th>
+          <th scope="col" class="govuk-table__header">Type</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            {% if data['day'] and data['month'] and data['year'] %}
+              {{ data['day'] }}/{{ data['month'] }}/{{ data['year'] }}
+            {% else %}
+              31/10/2025
+            {% endif %}
+          </td>
+          <td class="govuk-table__cell">
+            {{ data['sighting-type'] or 'Unclassified spirit' }}
+          </td>
+          <td class="govuk-table__cell govuk-tag govuk-tag--grey">
+            Completed
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">30/10/2025</td>
+          <td class="govuk-table__cell">Poltergeist</td>
+          <td class="govuk-table__cell govuk-tag govuk-tag--red">
+            Incomplete
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-      {{ govukTaskList({
-        idPrefix: "first-section",
-        items: [
-          {
-            title: {
-              text: "Submit claim"
-            },
-            href: "#",
-            status: completedStatus
-          },
-          {
-            title: {
-              text: "Upload reciept(s)"
-            },
-            href: "/upload",
-            status: incompleteStatus
-          }
-        ]
-      }) }}
+    <h2 class="govuk-heading-m">Next steps</h2>
 
-      
+    <ol class="govuk-list govuk-list--number">
+      <li>
+        Upload your <a href="#" class="govuk-link">ghost evidence</a> (photo, EVP, or ectoplasm sample)
+      </li>
+      <li>
+        Review your <a href="#" class="govuk-link">haunting report</a>
+      </li>
+      <li>
+        Await investigation outcome — this may take up to five working nights
+      </li>
+    </ol>
 
-       <div class="govuk-!-margin-top-5">
-        {{ govukButton({ text: "Your account", href: "/account" }) }}
-      </div>
+    <p class="govuk-body">
+      If you experience further disturbances,  
+      <a href="/start" class="govuk-link">record another ghost sighting</a>.
+    </p>
 
-    </div>
+    <p class="govuk-body">
+      Or return to <a href="https://www.gov.uk/" class="govuk-link">GOV.UK</a> to report something else.
+    </p>
+
   </div>
+</div>
 {% endblock %}

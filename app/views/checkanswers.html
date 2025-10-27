@@ -12,155 +12,84 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <h1 class="govuk-heading-xl">
-        Check your answers before submitting your claim
-      </h1>
+    <h1 class="govuk-heading-xl">
+      Check your answers before submitting your ghost sighting
+    </h1>
 
-      {{ govukSummaryList({
-        rows: [
+    {# Work out date safely before summary list #}
+    {% set hauntingDate = "Not entered" %}
+    {% if data['day'] and data['month'] and data['year'] %}
+      {% set hauntingDate = data['day'] + '/' + data['month'] + '/' + data['year'] %}
+    {% endif %}
 
-          {
-            key: {
-              text: "Full name"
-            },
-            value: {
-              text: "Lori Thomson"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question1",
-                  text: "Change"
-                
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Staff ID"
-            },
-            value: {
-              text: "ABC-12345"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question1",
-                  text: "Change"
-                  
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Email address"
-            },
-            value: {
-              text: "lori@lori.com"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question1",
-                  text: "Change"
-                
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Expense type"
-            },
-            value: {
-              text: "Work-related"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question2",
-                  text: "Change"
-                  
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Expense date"
-            },
-            value: {
-              text: "5 May 2025"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question3",
-                  text: "Change"
-                  
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Lunch items"
-            },
-            value: {
-              text: "Tomato soup, cheese toastie, Diet Coke"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question4",
-                  text: "Change"
-                  
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Lunch cost"
-            },
-            value: {
-              text: "£6.50"
-            },
-            actions: {
-              items: [
-                {
-                  href: "/question4",
-                  text: "Change",
-                  visuallyHiddenText: "Lunch cost"
-                }
-              ]
-            }
-          }
+    {{ govukSummaryList({
+      rows: [
 
-        ]
-      }) }}
+        {
+          key: { text: "Your full name" },
+          value: { text: data['full-name'] or "Not provided" },
+          actions: { items: [ { href: "/question1", text: "Change" } ] }
+        },
+        {
+          key: { text: "Email address" },
+          value: { text: data['email'] or "Not provided" },
+          actions: { items: [ { href: "/question1", text: "Change" } ] }
+        },
+        {
+          key: { text: "Ghost category" },
+          value: { text: data['sighting-type'] or "Not selected" },
+          actions: { items: [ { href: "/question2", text: "Change" } ] }
+        },
+        {
+          key: { text: "Date of haunting" },
+          value: { text: hauntingDate },
+          actions: { items: [ { href: "/question3", text: "Change" } ] }
+        },
+        {
+          key: { text: "Description of the ghost" },
+          value: { text: data['sightingDescription'] or "No description entered" },
+          actions: { items: [ { href: "/question4", text: "Change" } ] }
+        },
+        {
+          key: { text: "Where you saw the ghost" },
+          value: { text: data['sightingLocation'] or "No location entered" },
+          actions: { items: [ { href: "/question4", text: "Change" } ] }
+        },
+        {
+          key: { text: "Manifestation intensity" },
+          value: { text: data['activity'] or "Not selected" },
+          actions: { items: [ { href: "/question5", text: "Change" } ] }
+        },
+        {
+          key: { text: "What happened during the haunting" },
+          value: { text: data['activityDetails'] or "No details entered" },
+          actions: { items: [ { href: "/question6", text: "Change" } ] }
+        },
+        {
+          key: { text: "Do you have any evidence?" },
+          value: { text: data['evidence'] or "Not selected" },
+          actions: { items: [ { href: "/question6", text: "Change" } ] }
+        }
 
-      <h2 class="govuk-heading-m">
-        Now submit your claim
-      </h2>
+      ]
+    }) }}
 
-      <p>
-        By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
-      </p>
+    <h2 class="govuk-heading-m">
+      Now submit your sighting
+    </h2>
 
-      <form action="/confirmation" method="post" novalidate>
+    <p>
+      By submitting this report you confirm that, to the best of your knowledge, 
+      the ghost you saw was real and not a trick of the light.
+    </p>
 
-        {{ govukButton({
-          text: "Accept and send"
-        }) }}
+    <form action="/confirmation" method="post" novalidate>
+      {{ govukButton({ text: "Accept and send" }) }}
+    </form>
 
-      </form>
-
-    </div>
   </div>
+</div>
 {% endblock %}

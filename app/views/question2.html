@@ -21,10 +21,11 @@
       What type of ghost sighting are you reporting?
     </h1>
 
-    <form class="form" id="sighting-form" novalidate>
+    <!-- Added method and action so data is saved -->
+    <form class="form" id="sighting-form" method="post" action="/question3" novalidate>
 
       <div class="govuk-form-group" id="radios-group">
-        <!-- Radios with no fieldset/legend grouping -->
+        <!-- Accessibility issue: radios not wrapped in fieldset or legend -->
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="apparition" name="sighting-type" type="radio" value="Apparition">
           <label class="govuk-label govuk-radios__label" for="apparition">Full-bodied apparition</label>
@@ -40,13 +41,13 @@
       </div>
 
       {{ govukButton({ text: "Continue" }) }}
-
     </form>
 
     <script>
       document.getElementById('sighting-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
+        // Reset errors
         document.getElementById('error-summary-container').innerHTML = '';
         const radiosGroup = document.getElementById('radios-group');
         radiosGroup.classList.remove('govuk-form-group--error');
@@ -71,7 +72,8 @@
         if (hasError) {
           displayErrorSummary(errors);
         } else {
-          window.location.href = "/question3";
+          // Actually submit to server so it stores in session
+          event.target.submit();
         }
 
         function displayErrorSummary(errors) {

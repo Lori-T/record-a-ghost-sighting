@@ -18,10 +18,11 @@
     <div id="error-summary-container"></div>
 
     <h1 class="govuk-heading-l">
-   Ghost spotter details
+      Ghost spotter details
     </h1>
 
-    <form class="form" id="details-form" novalidate>
+    <!-- Added proper form action and method -->
+    <form class="form" id="details-form" method="post" action="/question2" novalidate>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           Tell us about you, the witness of the ghost sighting
@@ -29,17 +30,21 @@
 
         <div class="govuk-form-group" id="name-group">
           <label class="govuk-label" for="full-name">Full name</label>
-          <input class="govuk-input" id="full-name" name="full-name" type="text" placeholder="for example, Casper the Friendly Ghost">
+          <input class="govuk-input" id="full-name" name="full-name" type="text"
+                 placeholder="for example, Casper the Friendly Ghost">
         </div>
 
         <div class="govuk-form-group" id="email-group">
           <label class="govuk-label" for="email">Email address</label>
-          <input class="govuk-input" id="email" name="email" type="email" placeholder="phantom@example.com">
+          <input class="govuk-input" id="email" name="email" type="email"
+                 placeholder="phantom@example.com">
         </div>
       </fieldset>
 
-      <!-- Intentional accessibility issues for training -->
-      <a href="/question2" id="ghost-link" style="position: absolute; width: 0; height: 0; overflow: hidden;">I am watching you…</a>
+      <!-- Intentional accessibility issues -->
+      <a href="/question2" id="ghost-link" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+        I am watching you…
+      </a>
 
       <!-- Continue button intentionally not keyboard focusable -->
       <button class="govuk-button" type="submit" tabindex="-1">
@@ -82,7 +87,8 @@
         }
 
         if (!hasError) {
-          window.location.href = "/question2";
+          // Instead of just redirecting, actually submit the form
+          event.target.submit(); // submits with POST to /question2
         }
 
         function addError(groupId, fieldId, message) {

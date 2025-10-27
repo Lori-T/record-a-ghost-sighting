@@ -1,37 +1,77 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Confirmation page – {{ serviceName }} – GOV.UK Prototype Kit
+  Confirmation – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    {% set reference = "GHO" + (data['full-name'] or '000') %}
+    {% set reference = reference | slice(0,6) | upper %}
+    {{ govukPanel({
+      titleText: "REPORT COMPLETE",
+      html: "YOUR REFERENCE NUMBER:<br><strong>" + reference + "25</strong>"
+    }) }}
 
-      {{ govukPanel({
-        titleText: "APPLICATION COMPLETE",
-        html: "YOUR REFERENCE NUMBER: <br><strong>HDJ2123F</strong>"
-      }) }}
+    <p class="govuk-body">
+      Thank you{% if data['full-name'] %}, <strong>{{ data['full-name'] }}</strong>{% endif %}.  
+      Your report of a <strong>{{ data['sighting-type'] or 'supernatural entity' }}</strong>  
+      has been safely received by the Department for Supernatural Affairs.
+    </p>
 
-      <p>
-        We have sent you a confirmation email.
+    <h2 class="govuk-heading-m">Summary of your sighting</h2>
+
+    <p class="govuk-body">
+      <strong>When:</strong> 
+      {% if data['day'] and data['month'] and data['year'] %}
+        {{ data['day'] }}/{{ data['month'] }}/{{ data['year'] }}
+      {% else %}
+        Date unknown
+      {% endif %}
+      <br>
+      <strong>Where:</strong> {{ data['sightingLocation'] or 'Unknown location' }}
+      <br>
+      <strong>Manifestation:</strong> {{ data['activity'] or 'Not recorded' }}
+    </p>
+
+    {% if data['sightingDescription'] %}
+      <p class="govuk-body">
+        <strong>Description:</strong> {{ data['sightingDescription'] }}
       </p>
+    {% endif %}
 
-      <h2 class="govuk-heading-m">
-        WHAT HAPPENS NEXT
-      </h2>
-
-      <p class="govuk-body">We've received your claim and sent you a confirmation email.</p>
-<p class="govuk-body">Check your tasks to check if you need to upload a copy of your reciepts to validate your claim.</p>
-      <p>
-      <p class="govuk-body">Once your reciepts are uploaded should receive a decision within 5 working days.</p>
-      <p>
-        <a class="govuk-button" href="/tasklist">Your Tasks</a>
+    {% if data['activityDetails'] %}
+      <p class="govuk-body">
+        <strong>What happened:</strong> {{ data['activityDetails'] }}
       </p>
+    {% endif %}
 
+    <h2 class="govuk-heading-m">What happens next</h2>
 
-    </div>
+    <p class="govuk-body">
+      Our investigators will review your report from 
+      {% if data['sightingLocation'] %}
+        <strong>{{ data['sightingLocation'] }}</strong>
+      {% else %}
+        the reported area
+      {% endif %} 
+      and may contact you at {{ data['email'] or 'your registered email' }} if further details are required.
+    </p>
+
+    <p class="govuk-body">
+      You may receive follow-up instructions within five working nights.  
+      Please keep your electronic candle (email) nearby in case the spirits respond.
+    </p>
+
+    <p class="govuk-body">
+      If you experience further manifestations, you can  
+      <a href="/start" class="govuk-link">record another ghost sighting</a>.
+    </p>
+
+    <a class="govuk-button" href="/tasklist">View your tasks</a>
+
   </div>
-
+</div>
 {% endblock %}
