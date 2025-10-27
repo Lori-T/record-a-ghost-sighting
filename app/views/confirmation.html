@@ -10,7 +10,7 @@
 
     {{ govukPanel({
       titleText: "REPORT COMPLETE",
-      html: "YOUR REFERENCE NUMBER:<br><strong>GHO12325</strong>"
+      html: "YOUR REFERENCE NUMBER:<br><strong>GHO2025-13B</strong>"
     }) }}
 
     <p class="govuk-body">
@@ -21,30 +21,53 @@
 
     <h2 class="govuk-heading-m">Summary of your sighting</h2>
 
-    <p class="govuk-body">
-      <strong>When:</strong> 
-      {% if data['day'] and data['month'] and data['year'] %}
-        {{ data['day'] }}/{{ data['month'] }}/{{ data['year'] }}
-      {% else %}
-        Date unknown
-      {% endif %}
-      <br>
-      <strong>Where:</strong> {{ data['sightingLocation'] or 'Unknown location' }}
-      <br>
-      <strong>Manifestation:</strong> {{ data['activity'] or 'Not recorded' }}
-    </p>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">When</dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['day'] and data['month'] and data['year'] %}
+            {{ data['day'] }}/{{ data['month'] }}/{{ data['year'] }}
+          {% else %}
+            Date unknown
+          {% endif %}
+        </dd>
+      </div>
 
-    {% if data['sightingDescription'] %}
-      <p class="govuk-body">
-        <strong>Description:</strong> {{ data['sightingDescription'] }}
-      </p>
-    {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Where</dt>
+        <dd class="govuk-summary-list__value">{{ data['sightingLocation'] or 'Unknown location' }}</dd>
+      </div>
 
-    {% if data['activityDetails'] %}
-      <p class="govuk-body">
-        <strong>What happened:</strong> {{ data['activityDetails'] }}
-      </p>
-    {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Type of ghost</dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['sighting-type'] %}
+            {% if data['sighting-type'] is string %}
+              {{ data['sighting-type'] }}
+            {% else %}
+              {{ data['sighting-type'] | join(', ') }}
+            {% endif %}
+          {% else %}
+            Not specified
+          {% endif %}
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Description</dt>
+        <dd class="govuk-summary-list__value">{{ data['sightingDescription'] or 'No description provided' }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Manifestation intensity</dt>
+        <dd class="govuk-summary-list__value">{{ data['activity'] or 'Not recorded' }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Evidence uploaded</dt>
+        <dd class="govuk-summary-list__value">{{ data['evidence'] or 'No evidence uploaded' }}</dd>
+      </div>
+    </dl>
 
     <h2 class="govuk-heading-m">What happens next</h2>
 
@@ -54,8 +77,8 @@
         <strong>{{ data['sightingLocation'] }}</strong>
       {% else %}
         the reported area
-      {% endif %} 
-      and may contact you at {{ data['email'] or 'your registered email' }} if further details are required.
+      {% endif %}
+      and may contact you at {{ data['email'] or 'your registered email address' }} if further details are required.
     </p>
 
     <p class="govuk-body">

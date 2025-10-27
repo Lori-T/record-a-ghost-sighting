@@ -15,14 +15,24 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <h1 class="govuk-heading-xl">
+    <h1 class="govuk-heading-xl spooky-heading">
       Check your answers before submitting your ghost sighting
     </h1>
 
-    {# Calculate date safely before building the list #}
+    {# Safely build the haunting date #}
     {% set hauntingDate = "Not entered" %}
     {% if data['day'] and data['month'] and data['year'] %}
       {% set hauntingDate = data['day'] + '/' + data['month'] + '/' + data['year'] %}
+    {% endif %}
+
+    {# Join multiple checkbox selections from question 2 #}
+    {% set ghostTypes = "Not selected" %}
+    {% if data['sighting-type'] %}
+      {% if data['sighting-type'] is string %}
+        {% set ghostTypes = data['sighting-type'] %}
+      {% else %}
+        {% set ghostTypes = data['sighting-type'] | join(', ') %}
+      {% endif %}
     {% endif %}
 
     {{ govukSummaryList({
@@ -39,8 +49,8 @@
           actions: { items: [ { href: "/question1", text: "Change" } ] }
         },
         {
-          key: { text: "Ghost category" },
-          value: { text: data['sighting-type'] or "Not selected" },
+          key: { text: "Type of ghost sighting" },
+          value: { text: ghostTypes },
           actions: { items: [ { href: "/question2", text: "Change" } ] }
         },
         {
@@ -64,8 +74,8 @@
           actions: { items: [ { href: "/question5", text: "Change" } ] }
         },
         {
-          key: { text: "Uploaded ghost evidence" },
-          value: { text: data['ghostFile'] or "No file uploaded" },
+          key: { text: "Evidence uploaded" },
+          value: { text: data['evidence'] or "No evidence uploaded" },
           actions: { items: [ { href: "/question6", text: "Change" } ] }
         }
 
@@ -77,7 +87,7 @@
     </h2>
 
     <p>
-      By submitting this report you confirm that, to the best of your knowledge, 
+      By submitting this report you confirm that, to the best of your knowledge,
       the ghost you saw was real and not a trick of the light.
     </p>
 

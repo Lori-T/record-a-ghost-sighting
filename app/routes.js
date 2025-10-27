@@ -1,100 +1,89 @@
 //
-// Record a Ghost Sighting prototype routes
-// GOV.UK Prototype Kit – Department for Supernatural Affairs 👻
+// Routes for Record a Ghost Sighting – Spooky Accessibility Training
 //
 
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-// ---------------------------------------------------------
-// Start page
-// ---------------------------------------------------------
-router.get('/start', (req, res) => {
+// Home and start pages
+router.get('/', function (req, res) {
+  res.render('index')
+})
+
+router.get('/start', function (req, res) {
   res.render('start')
 })
 
-// ---------------------------------------------------------
-// Question 1 – Witness details
-// ---------------------------------------------------------
-router.post('/question1', (req, res) => {
-  const { 'full-name': fullName, email } = req.body
-  req.session.data['full-name'] = fullName
-  req.session.data['email'] = email
+// QUESTION 1: Witness details
+router.post('/question1', function (req, res) {
+  req.session.data['full-name'] = req.body['full-name']
+  req.session.data['email'] = req.body['email']
   res.redirect('/question2')
 })
 
-// ---------------------------------------------------------
-// Question 2 – Type(s) of ghost sighting (checkboxes)
-// ---------------------------------------------------------
-router.post('/question2', (req, res) => {
-  // Handle multiple checkbox values
-  let sightings = req.body['sighting-type']
-  if (!Array.isArray(sightings)) {
-    sightings = sightings ? [sightings] : []
-  }
-  req.session.data['sighting-type'] = sightings
+// QUESTION 2: Type of ghost sighting (checkboxes)
+router.post('/question2', function (req, res) {
+  // If a single checkbox is selected, wrap it in an array
+  const ghostTypes = req.body['sighting-type']
+  req.session.data['sighting-type'] = Array.isArray(ghostTypes)
+    ? ghostTypes
+    : [ghostTypes].filter(Boolean)
   res.redirect('/question3')
 })
 
-// ---------------------------------------------------------
-// Question 3 – Date and location of sighting
-// ---------------------------------------------------------
-router.post('/question3', (req, res) => {
-  const { day, month, year, 'sightingLocation': sightingLocation } = req.body
-  req.session.data['day'] = day
-  req.session.data['month'] = month
-  req.session.data['year'] = year
-  req.session.data['sightingLocation'] = sightingLocation
+// QUESTION 3: Date and location
+router.post('/question3', function (req, res) {
+  req.session.data['day'] = req.body['day']
+  req.session.data['month'] = req.body['month']
+  req.session.data['year'] = req.body['year']
+  req.session.data['sightingLocation'] = req.body['sightingLocation']
   res.redirect('/question4')
 })
 
-// ---------------------------------------------------------
-// Question 4 – What did you see?
-// ---------------------------------------------------------
-router.post('/question4', (req, res) => {
-  const { sightingDescription } = req.body
-  req.session.data['sightingDescription'] = sightingDescription
+// QUESTION 4: Description of ghost
+router.post('/question4', function (req, res) {
+  req.session.data['sightingDescription'] = req.body['sightingDescription']
   res.redirect('/question5')
 })
 
-// ---------------------------------------------------------
-// Question 5 – How strong was the supernatural activity?
-// ---------------------------------------------------------
-router.post('/question5', (req, res) => {
-  const { activity } = req.body
-  req.session.data['activity'] = activity
+// QUESTION 5: Activity intensity
+router.post('/question5', function (req, res) {
+  req.session.data['activity'] = req.body['activity']
   res.redirect('/question6')
 })
 
-// ---------------------------------------------------------
-// Question 6 – Upload your ghost evidence
-// ---------------------------------------------------------
-router.post('/question6', (req, res) => {
-  // For the prototype, we’ll just capture a filename or placeholder
-  const { evidence } = req.body
-  req.session.data['evidence'] = evidence || 'No file uploaded'
+// QUESTION 6: Evidence upload
+router.post('/question6', function (req, res) {
+  req.session.data['evidence'] = req.body['evidence'] || 'None'
   res.redirect('/checkanswers')
 })
 
-// ---------------------------------------------------------
-// Check your answers
-// ---------------------------------------------------------
-router.post('/checkanswers', (req, res) => {
+// CHECK ANSWERS
+router.post('/checkanswers', function (req, res) {
   res.redirect('/confirmation')
 })
 
-// ---------------------------------------------------------
-// Confirmation page
-// ---------------------------------------------------------
-router.get('/confirmation', (req, res) => {
-  res.render('confirmation')
+// CONFIRMATION PAGE
+router.post('/confirmation', function (req, res) {
+  res.render('confirmation', { data: req.session.data })
 })
 
-// ---------------------------------------------------------
-// Task list (optional end page)
-// ---------------------------------------------------------
-router.get('/tasklist', (req, res) => {
+// TASKLIST PAGE
+router.get('/tasklist', function (req, res) {
   res.render('tasklist')
+})
+
+// Guidance pages (for fun extras)
+router.get('/guidance', function (req, res) {
+  res.render('guidance')
+})
+
+router.get('/guidance1', function (req, res) {
+  res.render('guidance1')
+})
+
+router.get('/guidance2', function (req, res) {
+  res.render('guidance2')
 })
 
 module.exports = router
