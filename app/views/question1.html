@@ -17,12 +17,11 @@
 
     <div id="error-summary-container"></div>
 
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-l spooky-heading">
       Ghost spotter details
     </h1>
 
-    <!-- Added proper form action and method -->
-    <form class="form" id="details-form" method="post" action="/question2" novalidate>
+    <form class="form" id="details-form" novalidate>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           Tell us about you, the witness of the ghost sighting
@@ -87,8 +86,8 @@
         }
 
         if (!hasError) {
-          // Instead of just redirecting, actually submit the form
-          event.target.submit(); // submits with POST to /question2
+          // Fixed: Navigate directly to question 2 instead of submitting form
+          window.location.href = "/question2";
         }
 
         function addError(groupId, fieldId, message) {

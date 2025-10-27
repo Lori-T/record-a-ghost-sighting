@@ -17,81 +17,65 @@
 
     <div id="error-summary-container"></div>
 
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-l spooky-heading">
       What type of ghost sighting are you reporting?
     </h1>
 
-    <!-- Accessibility issue: checkboxes not wrapped in fieldset or legend, breaking context for screen readers -->
-    <form class="form" id="sighting-form" method="post" action="/question3" novalidate>
-
+    <!-- Intentionally missing legend/fieldset for accessibility -->
+    <form id="sighting-form" novalidate>
       <div class="govuk-form-group" id="checkbox-group">
-
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="apparition" name="sighting-type" type="checkbox" value="Apparition">
-            <label class="govuk-label govuk-checkboxes__label" for="apparition">
-              Full-bodied apparition
-            </label>
+            <label class="govuk-label govuk-checkboxes__label" for="apparition">Full-bodied apparition</label>
           </div>
-
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="poltergeist" name="sighting-type" type="checkbox" value="Poltergeist">
-            <label class="govuk-label govuk-checkboxes__label" for="poltergeist">
-              Poltergeist activity
-            </label>
+            <label class="govuk-label govuk-checkboxes__label" for="poltergeist">Poltergeist activity</label>
           </div>
-
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="shadow" name="sighting-type" type="checkbox" value="Shadow">
-            <label class="govuk-label govuk-checkboxes__label" for="shadow">
-              Shadowy presence
-            </label>
+            <label class="govuk-label govuk-checkboxes__label" for="shadow">Shadowy presence</label>
           </div>
-
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="mist" name="sighting-type" type="checkbox" value="Misty figure">
-            <label class="govuk-label govuk-checkboxes__label" for="mist">
-              Misty figure or glowing form
-            </label>
+            <input class="govuk-checkboxes__input" id="unknown" name="sighting-type" type="checkbox" value="Unknown">
+            <label class="govuk-label govuk-checkboxes__label" for="unknown">Unidentified manifestation</label>
           </div>
         </div>
-
       </div>
 
       {{ govukButton({ text: "Continue" }) }}
-
     </form>
 
     <script>
       document.getElementById('sighting-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const errorContainer = document.getElementById('error-summary-container');
-        const checkboxGroup = document.getElementById('checkbox-group');
-        errorContainer.innerHTML = '';
-        checkboxGroup.classList.remove('govuk-form-group--error');
+        const container = document.getElementById('error-summary-container');
+        const group = document.getElementById('checkbox-group');
+        container.innerHTML = '';
+        group.classList.remove('govuk-form-group--error');
 
         const oldError = document.querySelector('#checkbox-group .govuk-error-message');
         if (oldError) oldError.remove();
 
-        const selected = document.querySelectorAll('input[name="sighting-type"]:checked');
+        const checked = document.querySelectorAll('input[name="sighting-type"]:checked');
         const errors = [];
 
-        if (selected.length === 0) {
+        if (checked.length === 0) {
           const errorMessage = 'Select at least one type of ghost sighting';
-          checkboxGroup.classList.add('govuk-form-group--error');
+          group.classList.add('govuk-form-group--error');
           const errorEl = document.createElement('p');
           errorEl.className = 'govuk-error-message';
           errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
-          checkboxGroup.prepend(errorEl);
+          group.prepend(errorEl);
           errors.push({ fieldId: 'apparition', message: errorMessage });
         }
 
         if (errors.length > 0) {
           displayErrorSummary(errors);
         } else {
-          // Store selection and continue
-          event.target.submit();
+          window.location.href = '/question3';
         }
 
         function displayErrorSummary(errors) {
@@ -110,12 +94,11 @@
               </ul>
             </div>
           `;
-          errorContainer.appendChild(summary);
+          container.appendChild(summary);
           summary.focus();
         }
       });
     </script>
-
   </div>
 </div>
 {% endblock %}
