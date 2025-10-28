@@ -6,24 +6,29 @@ const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
 // Home and start pages
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   res.render('index')
 })
 
-router.get('/start', function (req, res) {
+router.get('/start', (req, res) => {
   res.render('start')
 })
 
-// QUESTION 1: Witness details
-router.post('/question1', function (req, res) {
+// QUESTION 1: Ghost spotter details
+router.get('/question1', (req, res) => {
+  res.render('question1', { data: req.session.data })
+})
+router.post('/question1', (req, res) => {
   req.session.data['full-name'] = req.body['full-name']
   req.session.data['email'] = req.body['email']
   res.redirect('/question2')
 })
 
 // QUESTION 2: Type of ghost sighting (checkboxes)
-router.post('/question2', function (req, res) {
-  // If a single checkbox is selected, wrap it in an array
+router.get('/question2', (req, res) => {
+  res.render('question2', { data: req.session.data })
+})
+router.post('/question2', (req, res) => {
   const ghostTypes = req.body['sighting-type']
   req.session.data['sighting-type'] = Array.isArray(ghostTypes)
     ? ghostTypes
@@ -32,7 +37,10 @@ router.post('/question2', function (req, res) {
 })
 
 // QUESTION 3: Date and location
-router.post('/question3', function (req, res) {
+router.get('/question3', (req, res) => {
+  res.render('question3', { data: req.session.data })
+})
+router.post('/question3', (req, res) => {
   req.session.data['day'] = req.body['day']
   req.session.data['month'] = req.body['month']
   req.session.data['year'] = req.body['year']
@@ -41,48 +49,64 @@ router.post('/question3', function (req, res) {
 })
 
 // QUESTION 4: Description of ghost
-router.post('/question4', function (req, res) {
+router.get('/question4', (req, res) => {
+  res.render('question4', { data: req.session.data })
+})
+router.post('/question4', (req, res) => {
   req.session.data['sightingDescription'] = req.body['sightingDescription']
   res.redirect('/question5')
 })
 
 // QUESTION 5: Activity intensity
-router.post('/question5', function (req, res) {
+router.get('/question5', (req, res) => {
+  res.render('question5', { data: req.session.data })
+})
+router.post('/question5', (req, res) => {
   req.session.data['activity'] = req.body['activity']
   res.redirect('/question6')
 })
 
 // QUESTION 6: Evidence upload
-router.post('/question6', function (req, res) {
-  req.session.data['evidence'] = req.body['evidence'] || 'None'
+router.get('/question6', (req, res) => {
+  res.render('question6', { data: req.session.data })
+})
+router.post('/question6', (req, res) => {
+  // Store uploaded file name or placeholder text
+  req.session.data['ghostFile'] = req.body['ghostFile'] || 'No evidence uploaded'
   res.redirect('/checkanswers')
 })
 
 // CHECK ANSWERS
-router.post('/checkanswers', function (req, res) {
+router.get('/checkanswers', (req, res) => {
+  res.render('checkanswers', { data: req.session.data })
+})
+router.post('/checkanswers', (req, res) => {
   res.redirect('/confirmation')
 })
 
 // CONFIRMATION PAGE
-router.post('/confirmation', function (req, res) {
+router.get('/confirmation', (req, res) => {
+  res.render('confirmation', { data: req.session.data })
+})
+router.post('/confirmation', (req, res) => {
   res.render('confirmation', { data: req.session.data })
 })
 
 // TASKLIST PAGE
-router.get('/tasklist', function (req, res) {
+router.get('/tasklist', (req, res) => {
   res.render('tasklist')
 })
 
-// Guidance pages (for fun extras)
-router.get('/guidance', function (req, res) {
+// GUIDANCE PAGES – spooky extras
+router.get('/guidance', (req, res) => {
   res.render('guidance')
 })
 
-router.get('/guidance1', function (req, res) {
+router.get('/guidance1', (req, res) => {
   res.render('guidance1')
 })
 
-router.get('/guidance2', function (req, res) {
+router.get('/guidance2', (req, res) => {
   res.render('guidance2')
 })
 

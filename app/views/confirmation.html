@@ -15,7 +15,7 @@
 
     <p class="govuk-body">
       Thank you{% if data['full-name'] %}, <strong>{{ data['full-name'] }}</strong>{% endif %}.  
-      Your report of a <strong>{{ data['sighting-type'] or 'supernatural entity' }}</strong>  
+      Your report  
       has been safely received by the Department for Supernatural Affairs.
     </p>
 
@@ -65,25 +65,20 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Evidence uploaded</dt>
-        <dd class="govuk-summary-list__value">{{ data['evidence'] or 'No evidence uploaded' }}</dd>
+        <dd class="govuk-summary-list__value">{{ data['ghostFile'] or 'No evidence uploaded' }}</dd>
       </div>
     </dl>
 
     <h2 class="govuk-heading-m">What happens next</h2>
 
     <p class="govuk-body">
-      Our investigators will review your report from 
-      {% if data['sightingLocation'] %}
-        <strong>{{ data['sightingLocation'] }}</strong>
-      {% else %}
-        the reported area
-      {% endif %}
+      Our investigators will review your report     
       and may contact you at {{ data['email'] or 'your registered email address' }} if further details are required.
     </p>
 
     <p class="govuk-body">
       You may receive follow-up instructions within five working nights.  
-      Please keep your electronic candle (email) nearby in case the spirits respond.
+      Please keep your ouija board (or alternative device) nearby in case the spirits respond.
     </p>
 
     <p class="govuk-body">
@@ -91,7 +86,9 @@
       <a href="/start" class="govuk-link">record another ghost sighting</a>.
     </p>
 
-    <a class="govuk-button" href="/tasklist">View your tasks</a>
+    <p>
+      <a class="govuk-button" href="/tasklist">View your tasks</a>
+    </p>
 
   </div>
 </div>

@@ -15,90 +15,73 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <div id="error-summary-container"></div>
-
     <h1 class="govuk-heading-l spooky-heading">
-      What type of ghost sighting are you reporting?
+      Type of ghost sighting
     </h1>
 
-    <!-- Intentionally missing legend/fieldset for accessibility -->
-    <form id="sighting-form" novalidate>
-      <div class="govuk-form-group" id="checkbox-group">
-        <div class="govuk-checkboxes">
+    <form class="form" id="sighting-form" method="post" action="/question2" novalidate>
+      <fieldset class="govuk-fieldset" aria-describedby="ghost-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          What kind of apparition did you encounter?
+        </legend>
+        <span id="ghost-hint" class="govuk-hint">
+          Select all that apply — if you dare...
+        </span>
+
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+          {% set selectedTypes = data['sighting-type'] or [] %}
+
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="apparition" name="sighting-type" type="checkbox" value="Apparition">
-            <label class="govuk-label govuk-checkboxes__label" for="apparition">Full-bodied apparition</label>
+            <input class="govuk-checkboxes__input" id="transparent" name="sighting-type" type="checkbox" value="Transparent figure"
+              {% if 'Transparent figure' in selectedTypes %}checked{% endif %}>
+            <label class="govuk-label govuk-checkboxes__label" for="transparent">Transparent figure</label>
           </div>
+
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="poltergeist" name="sighting-type" type="checkbox" value="Poltergeist">
-            <label class="govuk-label govuk-checkboxes__label" for="poltergeist">Poltergeist activity</label>
+            <input class="govuk-checkboxes__input" id="floating" name="sighting-type" type="checkbox" value="Floating apparition"
+              {% if 'Floating apparition' in selectedTypes %}checked{% endif %}>
+            <label class="govuk-label govuk-checkboxes__label" for="floating">Floating apparition</label>
           </div>
+
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="shadow" name="sighting-type" type="checkbox" value="Shadow">
+            <input class="govuk-checkboxes__input" id="shadow" name="sighting-type" type="checkbox" value="Shadowy presence"
+              {% if 'Shadowy presence' in selectedTypes %}checked{% endif %}>
             <label class="govuk-label govuk-checkboxes__label" for="shadow">Shadowy presence</label>
           </div>
+
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="unknown" name="sighting-type" type="checkbox" value="Unknown">
-            <label class="govuk-label govuk-checkboxes__label" for="unknown">Unidentified manifestation</label>
+            <input class="govuk-checkboxes__input" id="poltergeist" name="sighting-type" type="checkbox" value="Poltergeist activity"
+              {% if 'Poltergeist activity' in selectedTypes %}checked{% endif %}>
+            <label class="govuk-label govuk-checkboxes__label" for="poltergeist">Poltergeist activity</label>
           </div>
         </div>
-      </div>
+      </fieldset>
 
-      {{ govukButton({ text: "Continue" }) }}
+      <!-- Hidden link for spooky clue -->
+      <a href="/question3" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
+        Something lurks here…
+      </a>
+
+      <!-- Continue button intentionally not keyboard focusable -->
+      <button class="govuk-button govuk-!-margin-top-6" type="submit" tabindex="-1">
+  Continue through the mist
+</button>
     </form>
 
     <script>
-      document.getElementById('sighting-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const container = document.getElementById('error-summary-container');
-        const group = document.getElementById('checkbox-group');
-        container.innerHTML = '';
-        group.classList.remove('govuk-form-group--error');
-
-        const oldError = document.querySelector('#checkbox-group .govuk-error-message');
-        if (oldError) oldError.remove();
-
-        const checked = document.querySelectorAll('input[name="sighting-type"]:checked');
-        const errors = [];
-
-        if (checked.length === 0) {
-          const errorMessage = 'Select at least one type of ghost sighting';
-          group.classList.add('govuk-form-group--error');
-          const errorEl = document.createElement('p');
-          errorEl.className = 'govuk-error-message';
-          errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
-          group.prepend(errorEl);
-          errors.push({ fieldId: 'apparition', message: errorMessage });
-        }
-
-        if (errors.length > 0) {
-          displayErrorSummary(errors);
-        } else {
-          window.location.href = '/question3';
-        }
-
-        function displayErrorSummary(errors) {
-          const summary = document.createElement('div');
-          summary.className = 'govuk-error-summary';
-          summary.setAttribute('aria-labelledby', 'error-summary-title');
-          summary.setAttribute('role', 'alert');
-          summary.setAttribute('tabindex', '-1');
-          summary.innerHTML = `
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-              </ul>
-            </div>
-          `;
-          container.appendChild(summary);
-          summary.focus();
-        }
+      // --- Accessibility training intentional failure ---
+      // Button cannot be focused by keyboard users (tabindex=-1)
+      // but ensure mouse clicks still POST correctly
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('sighting-form');
+        const spookyButton = form.querySelector('.govuk-button');
+        spookyButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          form.submit();
+        });
       });
     </script>
+
   </div>
 </div>
 {% endblock %}

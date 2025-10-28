@@ -35,6 +35,9 @@
       {% endif %}
     {% endif %}
 
+    {# File upload name fix #}
+    {% set ghostEvidence = data['ghostFile'] or "No evidence uploaded" %}
+
     {{ govukSummaryList({
       rows: [
 
@@ -75,7 +78,7 @@
         },
         {
           key: { text: "Evidence uploaded" },
-          value: { text: data['evidence'] or "No evidence uploaded" },
+          value: { text: ghostEvidence },
           actions: { items: [ { href: "/question6", text: "Change" } ] }
         }
 

@@ -7,7 +7,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "question4"
+    href: "javascript:window.history.back()"
   }) }}
 {% endblock %}
 
@@ -23,33 +23,37 @@
 
     <p>Choose the option that best describes what you experienced.</p>
 
-    <!-- Intentionally missing fieldset/legend for accessibility exercise -->
-    <form id="activity-form" novalidate>
+    <!-- Intentional accessibility issue: missing fieldset/legend -->
+    <form id="activity-form" method="post" action="/question5" novalidate>
       <div class="govuk-form-group" id="activity-group">
         <div class="govuk-radios no-fieldset">
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="weak" name="activity" type="radio" value="weak">
+            <input class="govuk-radios__input" id="weak" name="activity" type="radio" value="weak"
+              {% if data['activity'] == 'weak' %}checked{% endif %}>
             <label class="govuk-label govuk-radios__label" for="weak">
               Faint – a strange feeling or cold air
             </label>
           </div>
 
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="moderate" name="activity" type="radio" value="moderate">
+            <input class="govuk-radios__input" id="moderate" name="activity" type="radio" value="moderate"
+              {% if data['activity'] == 'moderate' %}checked{% endif %}>
             <label class="govuk-label govuk-radios__label" for="moderate">
               Moderate – heard whispers or unexplained footsteps
             </label>
           </div>
 
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="strong" name="activity" type="radio" value="strong">
+            <input class="govuk-radios__input" id="strong" name="activity" type="radio" value="strong"
+              {% if data['activity'] == 'strong' %}checked{% endif %}>
             <label class="govuk-label govuk-radios__label" for="strong">
               Strong – visible movement, temperature drop, flickering lights
             </label>
           </div>
 
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="severe" name="activity" type="radio" value="severe">
+            <input class="govuk-radios__input" id="severe" name="activity" type="radio" value="severe"
+              {% if data['activity'] == 'severe' %}checked{% endif %}>
             <label class="govuk-label govuk-radios__label" for="severe">
               Severe – full manifestation, objects moved or levitated
             </label>
@@ -59,8 +63,13 @@
 
       <br>
 
-      <!-- Intentionally not perfect – no aria-describedby etc. -->
-      <button class="govuk-button govuk-button--start ghost-button" data-module="govuk-button" type="submit">
+      <!-- Hidden link for spooky exercise -->
+      <a href="/question6" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
+        The air grows colder…
+      </a>
+
+      <!-- Continue button intentionally not keyboard focusable -->
+      <button class="govuk-button govuk-button--start ghost-button" type="submit" tabindex="-1">
         Continue
         <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
              viewBox="0 0 33 40" role="presentation" focusable="false">
@@ -70,9 +79,8 @@
     </form>
 
     <script>
+      // --- Validation (same as before) ---
       document.getElementById('activity-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
         const errorContainer = document.getElementById('error-summary-container');
         const activityGroup = document.getElementById('activity-group');
         errorContainer.innerHTML = '';
@@ -85,6 +93,7 @@
         const errors = [];
 
         if (!selected) {
+          event.preventDefault();
           const errorMessage = 'Select how strong the supernatural activity was';
           activityGroup.classList.add('govuk-form-group--error');
           const errorEl = document.createElement('p');
@@ -92,13 +101,7 @@
           errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
           activityGroup.prepend(errorEl);
           errors.push({ fieldId: 'weak', message: errorMessage });
-        }
-
-        if (errors.length > 0) {
           displayErrorSummary(errors);
-        } else {
-          // Simulate save and move on to question6
-          window.location.href = '/question6';
         }
 
         function displayErrorSummary(errors) {
@@ -120,6 +123,19 @@
           errorContainer.appendChild(summary);
           summary.focus();
         }
+      });
+
+      // --- Accessibility training intentional failure ---
+      // Button cannot be focused by keyboard users (tabindex=-1)
+      // but this ensures mouse clicks still POST correctly
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('activity-form');
+        const spookyButton = form.querySelector('.govuk-button');
+
+        spookyButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          form.submit();
+        });
       });
     </script>
 

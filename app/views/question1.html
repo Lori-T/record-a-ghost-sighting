@@ -21,7 +21,8 @@
       Ghost spotter details
     </h1>
 
-    <form class="form" id="details-form" novalidate>
+    <!-- Correct form setup for session data -->
+    <form class="form" id="details-form" method="post" action="/question1" novalidate>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           Tell us about you, the witness of the ghost sighting
@@ -30,17 +31,19 @@
         <div class="govuk-form-group" id="name-group">
           <label class="govuk-label" for="full-name">Full name</label>
           <input class="govuk-input" id="full-name" name="full-name" type="text"
-                 placeholder="for example, Casper the Friendly Ghost">
+                 placeholder="for example, Casper the Friendly Ghost"
+                 value="{{ data['full-name'] }}">
         </div>
 
         <div class="govuk-form-group" id="email-group">
           <label class="govuk-label" for="email">Email address</label>
           <input class="govuk-input" id="email" name="email" type="email"
-                 placeholder="phantom@example.com">
+                 placeholder="phantom@example.com"
+                 value="{{ data['email'] }}">
         </div>
       </fieldset>
 
-      <!-- Intentional accessibility issues -->
+      <!-- Hidden link for accessibility exercise -->
       <a href="/question2" id="ghost-link" style="position: absolute; width: 0; height: 0; overflow: hidden;">
         I am watching you…
       </a>
@@ -53,10 +56,9 @@
 
     <script>
       document.getElementById('details-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        // Clear previous errors
-        document.getElementById('error-summary-container').innerHTML = '';
+        // Perform client-side validation
+        const errorContainer = document.getElementById('error-summary-container');
+        errorContainer.innerHTML = '';
         ['name', 'email'].forEach(function (id) {
           const group = document.getElementById(id + '-group');
           group.classList.remove('govuk-form-group--error');
@@ -82,12 +84,8 @@
 
         if (errors.length > 0) {
           hasError = true;
+          event.preventDefault();
           displayErrorSummary(errors);
-        }
-
-        if (!hasError) {
-          // Fixed: Navigate directly to question 2 instead of submitting form
-          window.location.href = "/question2";
         }
 
         function addError(groupId, fieldId, message) {
@@ -101,7 +99,6 @@
         }
 
         function displayErrorSummary(errors) {
-          const container = document.getElementById('error-summary-container');
           const summary = document.createElement('div');
           summary.className = 'govuk-error-summary';
           summary.setAttribute('aria-labelledby', 'error-summary-title');
@@ -117,11 +114,26 @@
               </ul>
             </div>
           `;
-          container.appendChild(summary);
+          errorContainer.appendChild(summary);
           summary.focus();
         }
       });
+
+      // --- Accessibility training intentional failure ---
+      // Button cannot be focused by keyboard users (tabindex=-1)
+      // but this ensures mouse clicks still POST correctly
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('details-form');
+        const spookyButton = form.querySelector('.govuk-button');
+
+        spookyButton.addEventListener('click', function (event) {
+          // Force proper POST even though tabindex=-1
+          event.preventDefault();
+          form.submit();
+        });
+      });
     </script>
+
   </div>
 </div>
 {% endblock %}

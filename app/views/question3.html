@@ -17,32 +17,39 @@
 
     <div id="error-summary-container"></div>
 
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-l spooky-heading">
       When and where did the ghost appear?
     </h1>
 
-    <form class="form" id="date-form" novalidate>
-
+    <!-- Corrected: post to /question3 -->
+    <form class="form" id="date-form" method="post" action="/question3" novalidate>
       <div class="govuk-form-group" id="date-group">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
-          <!-- Accessibility issue: legend missing question text -->
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          </legend>
+          <!-- Intentional accessibility issue: empty legend -->
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m"></legend>
+
           <div class="govuk-hint" id="date-hint">
             For example 31 10 2025
           </div>
+
           <div class="govuk-date-input" id="sighting-date">
             <div class="govuk-date-input__item">
               <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="day" type="text">
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                     id="day" name="day" type="text"
+                     value="{{ data['day'] }}">
             </div>
             <div class="govuk-date-input__item">
               <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="month" type="text">
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                     id="month" name="month" type="text"
+                     value="{{ data['month'] }}">
             </div>
             <div class="govuk-date-input__item">
               <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="year" type="text">
+              <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                     id="year" name="year" type="text"
+                     value="{{ data['year'] }}">
             </div>
           </div>
         </fieldset>
@@ -53,17 +60,26 @@
         <div id="location-hint" class="govuk-hint">
           Enter the location, address or place name
         </div>
-        <input class="govuk-input govuk-input--width-20" id="sightingLocation" name="sightingLocation" type="text" aria-describedby="location-hint">
+        <input class="govuk-input govuk-input--width-20" id="sightingLocation"
+               name="sightingLocation" type="text"
+               value="{{ data['sightingLocation'] }}"
+               aria-describedby="location-hint">
       </div>
 
-      {{ govukButton({ text: "Continue" }) }}
+      <!-- Hidden link for accessibility exercise -->
+      <a href="/question4" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
+        The shadows grow longer…
+      </a>
 
+      <!-- Continue button intentionally not keyboard focusable -->
+      <button class="govuk-button" type="submit" tabindex="-1">
+        Continue into the fog
+      </button>
     </form>
 
     <script>
+      // --- Validation (unchanged) ---
       document.getElementById('date-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
         const errorContainer = document.getElementById('error-summary-container');
         errorContainer.innerHTML = '';
         const dateGroup = document.getElementById('date-group');
@@ -79,16 +95,14 @@
         const location = document.getElementById('sightingLocation').value.trim();
 
         const errors = [];
-
         if (!day) errors.push({ fieldId: 'day', message: 'Enter the day' });
         if (!month) errors.push({ fieldId: 'month', message: 'Enter the month' });
         if (!year) errors.push({ fieldId: 'year', message: 'Enter the year' });
         if (!location) errors.push({ fieldId: 'sightingLocation', message: 'Enter where you saw the ghost' });
 
         if (errors.length > 0) {
+          event.preventDefault();
           displayErrors(errors);
-        } else {
-          window.location.href = "/question4";
         }
 
         function displayErrors(errors) {
@@ -121,6 +135,18 @@
             input.parentNode.insertBefore(errorMessage, input);
           });
         }
+      });
+
+      // --- Accessibility training intentional failure ---
+      // Button cannot be focused by keyboard users (tabindex=-1)
+      // but this ensures mouse clicks still POST correctly
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('date-form');
+        const spookyButton = form.querySelector('.govuk-button');
+        spookyButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          form.submit();
+        });
       });
     </script>
 
