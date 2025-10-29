@@ -23,7 +23,6 @@
 
     <p>Describe what the ghost looked like or what happened.</p>
 
-    <!-- Corrected form setup: post to /question4 -->
     <form id="description-form" method="post" action="/question4" novalidate>
       <div class="govuk-form-group" id="description-group">
         <label class="govuk-label" for="sightingDescription">
@@ -34,75 +33,71 @@
           placeholder="For example, a tall, pale figure with glowing eyes...">{{ data['sightingDescription'] }}</textarea>
       </div>
 
-      <!-- Hidden link for accessibility exercise -->
-      <a href="/question5" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
+      <!-- Hidden spooky link -->
+      <a href="/question5" id="ghost-link"
+         style="position:absolute;width:0;height:0;overflow:hidden;">
         I can still feel its presence…
       </a>
 
-      <!-- Continue button intentionally not keyboard focusable -->
-      <button class="govuk-button" type="submit" tabindex="-1">
+      <button class="govuk-button govuk-!-margin-top-6" type="submit" tabindex="-1">
         Continue if you dare
       </button>
     </form>
 
     <script>
-      // --- Validation (same as before) ---
-      document.getElementById('description-form').addEventListener('submit', function (event) {
-        const errorContainer = document.getElementById('error-summary-container');
-        errorContainer.innerHTML = '';
-        const group = document.getElementById('description-group');
-        group.classList.remove('govuk-form-group--error');
-        const oldError = document.querySelector('#description-group .govuk-error-message');
-        if (oldError) oldError.remove();
-
-        const description = document.getElementById('sightingDescription').value.trim();
-        const errors = [];
-
-        if (!description) {
-          event.preventDefault();
-          const message = 'Enter a description of the ghost';
-          group.classList.add('govuk-form-group--error');
-          const errorEl = document.createElement('p');
-          errorEl.className = 'govuk-error-message';
-          errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + message;
-          group.prepend(errorEl);
-          errors.push({ fieldId: 'sightingDescription', message });
-        }
-
-        if (errors.length > 0) {
-          displayErrorSummary(errors);
-        }
-
-        function displayErrorSummary(errors) {
-          const summary = document.createElement('div');
-          summary.className = 'govuk-error-summary';
-          summary.setAttribute('aria-labelledby', 'error-summary-title');
-          summary.setAttribute('role', 'alert');
-          summary.setAttribute('tabindex', '-1');
-          summary.innerHTML = `
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-              </ul>
-            </div>
-          `;
-          errorContainer.appendChild(summary);
-          summary.focus();
-        }
-      });
-
-      // --- Accessibility training intentional failure ---
-      // Button cannot be focused by keyboard users (tabindex=-1)
-      // but this ensures mouse clicks still POST correctly
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('description-form');
         const spookyButton = form.querySelector('.govuk-button');
+        const errorContainer = document.getElementById('error-summary-container');
+
         spookyButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          form.submit();
+          event.preventDefault(); // stop instant submit
+
+          // Clear old errors
+          errorContainer.innerHTML = '';
+          const group = document.getElementById('description-group');
+          group.classList.remove('govuk-form-group--error');
+          const oldError = document.querySelector('#description-group .govuk-error-message');
+          if (oldError) oldError.remove();
+
+          const description = document.getElementById('sightingDescription').value.trim();
+          const errors = [];
+
+          if (!description) {
+            const message = 'Enter a description of the ghost';
+            group.classList.add('govuk-form-group--error');
+            const errorEl = document.createElement('p');
+            errorEl.className = 'govuk-error-message';
+            errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + message;
+            group.prepend(errorEl);
+            errors.push({ fieldId: 'sightingDescription', message });
+          }
+
+          if (errors.length === 0) {
+            form.submit(); // only submit if valid
+          } else {
+            displayErrorSummary(errors);
+          }
+
+          function displayErrorSummary(errors) {
+            const summary = document.createElement('div');
+            summary.className = 'govuk-error-summary';
+            summary.setAttribute('aria-labelledby', 'error-summary-title');
+            summary.setAttribute('role', 'alert');
+            summary.setAttribute('tabindex', '-1');
+            summary.innerHTML = `
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+                </ul>
+              </div>
+            `;
+            errorContainer.appendChild(summary);
+            summary.focus();
+          }
         });
       });
     </script>

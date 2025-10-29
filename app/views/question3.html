@@ -21,7 +21,6 @@
       When and where did the ghost appear?
     </h1>
 
-    <!-- Corrected: post to /question3 -->
     <form class="form" id="date-form" method="post" action="/question3" novalidate>
       <div class="govuk-form-group" id="date-group">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
@@ -67,85 +66,79 @@
       </div>
 
       <!-- Hidden link for accessibility exercise -->
-      <a href="/question4" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
+      <a href="/question4" id="ghost-link"
+         style="position:absolute;width:0;height:0;overflow:hidden;">
         The shadows grow longer…
       </a>
 
-      <!-- Continue button intentionally not keyboard focusable -->
-      <button class="govuk-button" type="submit" tabindex="-1">
+      <button class="govuk-button govuk-!-margin-top-6" type="submit" tabindex="-1">
         Continue into the fog
       </button>
     </form>
 
     <script>
-      // --- Validation (unchanged) ---
-      document.getElementById('date-form').addEventListener('submit', function (event) {
-        const errorContainer = document.getElementById('error-summary-container');
-        errorContainer.innerHTML = '';
-        const dateGroup = document.getElementById('date-group');
-        const locationGroup = document.getElementById('location-group');
-        dateGroup.classList.remove('govuk-form-group--error');
-        locationGroup.classList.remove('govuk-form-group--error');
-        document.querySelectorAll('.govuk-input').forEach(el => el.classList.remove('govuk-input--error'));
-        document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
-
-        const day = document.getElementById('day').value.trim();
-        const month = document.getElementById('month').value.trim();
-        const year = document.getElementById('year').value.trim();
-        const location = document.getElementById('sightingLocation').value.trim();
-
-        const errors = [];
-        if (!day) errors.push({ fieldId: 'day', message: 'Enter the day' });
-        if (!month) errors.push({ fieldId: 'month', message: 'Enter the month' });
-        if (!year) errors.push({ fieldId: 'year', message: 'Enter the year' });
-        if (!location) errors.push({ fieldId: 'sightingLocation', message: 'Enter where you saw the ghost' });
-
-        if (errors.length > 0) {
-          event.preventDefault();
-          displayErrors(errors);
-        }
-
-        function displayErrors(errors) {
-          const summary = document.createElement('div');
-          summary.className = 'govuk-error-summary';
-          summary.setAttribute('aria-labelledby', 'error-summary-title');
-          summary.setAttribute('role', 'alert');
-          summary.setAttribute('tabindex', '-1');
-          summary.innerHTML = `
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-              </ul>
-            </div>
-          `;
-          errorContainer.appendChild(summary);
-          summary.focus();
-
-          errors.forEach(error => {
-            const input = document.getElementById(error.fieldId);
-            input.classList.add('govuk-input--error');
-            const group = input.closest('.govuk-form-group');
-            group.classList.add('govuk-form-group--error');
-            const errorMessage = document.createElement('span');
-            errorMessage.className = 'govuk-error-message';
-            errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
-            input.parentNode.insertBefore(errorMessage, input);
-          });
-        }
-      });
-
-      // --- Accessibility training intentional failure ---
-      // Button cannot be focused by keyboard users (tabindex=-1)
-      // but this ensures mouse clicks still POST correctly
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('date-form');
         const spookyButton = form.querySelector('.govuk-button');
+        const errorContainer = document.getElementById('error-summary-container');
+
         spookyButton.addEventListener('click', function (event) {
           event.preventDefault();
-          form.submit();
+
+          // Clear previous errors
+          errorContainer.innerHTML = '';
+          document.querySelectorAll('.govuk-form-group--error').forEach(el => el.classList.remove('govuk-form-group--error'));
+          document.querySelectorAll('.govuk-error-message').forEach(el => el.remove());
+          document.querySelectorAll('.govuk-input--error').forEach(el => el.classList.remove('govuk-input--error'));
+
+          const day = document.getElementById('day').value.trim();
+          const month = document.getElementById('month').value.trim();
+          const year = document.getElementById('year').value.trim();
+          const location = document.getElementById('sightingLocation').value.trim();
+          const errors = [];
+
+          if (!day) errors.push({ fieldId: 'day', message: 'Enter the day' });
+          if (!month) errors.push({ fieldId: 'month', message: 'Enter the month' });
+          if (!year) errors.push({ fieldId: 'year', message: 'Enter the year' });
+          if (!location) errors.push({ fieldId: 'sightingLocation', message: 'Enter where you saw the ghost' });
+
+          if (errors.length === 0) {
+            form.submit();
+          } else {
+            displayErrors(errors);
+          }
+
+          function displayErrors(errors) {
+            const summary = document.createElement('div');
+            summary.className = 'govuk-error-summary';
+            summary.setAttribute('aria-labelledby', 'error-summary-title');
+            summary.setAttribute('role', 'alert');
+            summary.setAttribute('tabindex', '-1');
+            summary.innerHTML = `
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+                </ul>
+              </div>
+            `;
+            errorContainer.appendChild(summary);
+            summary.focus();
+
+            errors.forEach(error => {
+              const input = document.getElementById(error.fieldId);
+              input.classList.add('govuk-input--error');
+              const group = input.closest('.govuk-form-group');
+              group.classList.add('govuk-form-group--error');
+              const errorMessage = document.createElement('span');
+              errorMessage.className = 'govuk-error-message';
+              errorMessage.innerHTML =
+                `<span class="govuk-visually-hidden">Error:</span> ${error.message}`;
+              input.parentNode.insertBefore(errorMessage, input);
+            });
+          }
         });
       });
     </script>

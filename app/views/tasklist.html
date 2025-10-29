@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Your tasks – {{ serviceName }} – GOV.UK Prototype Kit
+  View your reports – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -15,93 +15,109 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-xl">
-      Your account
+    <h1 class="govuk-heading-xl spooky-heading">
+      View your reports
     </h1>
 
     <p class="govuk-body">
       Welcome back{% if data['full-name'] %}, <strong>{{ data['full-name'] }}</strong>{% endif %}.
+      The Department for Supernatural Affairs has archived your recent ghost sightings below.
     </p>
 
     {% if data['email'] %}
-      <p class="govuk-body">Your registered email: {{ data['email'] }}</p>
+      <p class="govuk-body">Registered email: {{ data['email'] }}</p>
     {% endif %}
 
-    <h2 class="govuk-heading-l">Your ghost sighting report</h2>
+    <h2 class="govuk-heading-l">Your completed reports</h2>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Sighting name</th>
+          <th scope="col" class="govuk-table__header">Date submitted</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="/checkanswers" class="govuk-link">
+              {{ data['sightingLocation'] or 'Unnamed apparition' }}
+            </a>
+          </td>
+          <td class="govuk-table__cell">
+            {% if data['day'] and data['month'] and data['year'] %}
+              {{ data['day'] }}/{{ data['month'] }}/{{ data['year'] }}
+            {% else %}
+              31/10/2025
+            {% endif %}
+          </td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--green">Filed</strong>
+          </td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="#" class="govuk-link">The Phantom of Platform 9</a>
+          </td>
+          <td class="govuk-table__cell">28/10/2025</td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--blue">Under review</strong>
+          </td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="#" class="govuk-link">Whispering Mirror Incident</a>
+          </td>
+          <td class="govuk-table__cell">22/10/2025</td>
+          <td class="govuk-table__cell">
+            <strong class="govuk-tag govuk-tag--green">Approved</strong>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-l">Reports by other investigators</h2>
 
     <p class="govuk-body">
-      You can complete or review each section of your sighting report below.
+      Other trained ghost spotters have submitted the following reports this month:
     </p>
 
-    <ol class="app-task-list">
-      <li>
-        <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number">1. </span> Witness and sighting details
-        </h2>
-        <ul class="app-task-list__items">
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question1" class="govuk-link">Your details</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question2" class="govuk-link">Type of ghost sighting</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question3" class="govuk-link">Date and location</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question4" class="govuk-link">Description of ghost</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question5" class="govuk-link">Manifestation intensity</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/question6" class="govuk-link">Upload your ghost evidence</a>
-            </span>
-            {% if data['ghostFile'] %}
-              <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-            {% else %}
-              <strong class="govuk-tag govuk-tag--grey app-task-list__tag">Not started</strong>
-            {% endif %}
-          </li>
-        </ul>
-      </li>
+    <div class="govuk-!-margin-bottom-9">
+      <div class="govuk-summary-card govuk-!-margin-bottom-4">
+        <div class="govuk-summary-card__title-wrapper">
+          <h3 class="govuk-summary-card__title">The Candle That Wouldn’t Go Out</h3>
+          <strong class="govuk-tag govuk-tag--yellow">Awaiting review</strong>
+        </div>
+        <div class="govuk-summary-card__content">
+          <p class="govuk-body-s">Submitted by <strong>Dr Spectra</strong> – Location: Hexham Abbey</p>
+        </div>
+      </div>
 
-      <li>
-        <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number">2. </span> Review and submit
-        </h2>
-        <ul class="app-task-list__items">
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/checkanswers" class="govuk-link">Check your answers</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Completed</strong>
-          </li>
-          <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              <a href="/confirmation" class="govuk-link">Submit your report</a>
-            </span>
-            <strong class="govuk-tag govuk-tag--green app-task-list__tag">Submitted</strong>
-          </li>
-        </ul>
-      </li>
-    </ol>
+      <div class="govuk-summary-card govuk-!-margin-bottom-4">
+        <div class="govuk-summary-card__title-wrapper">
+          <h3 class="govuk-summary-card__title">Shadow in the Archive Room</h3>
+          <strong class="govuk-tag govuk-tag--green">Verified</strong>
+        </div>
+        <div class="govuk-summary-card__content">
+          <p class="govuk-body-s">Submitted by <strong>Lucinda Holloway</strong> – Location: Edinburgh Old Library</p>
+        </div>
+      </div>
+
+      <div class="govuk-summary-card govuk-!-margin-bottom-4">
+        <div class="govuk-summary-card__title-wrapper">
+          <h3 class="govuk-summary-card__title">Unseen Footsteps in Corridor B</h3>
+          <strong class="govuk-tag govuk-tag--blue">Under investigation</strong>
+        </div>
+        <div class="govuk-summary-card__content">
+          <p class="govuk-body-s">Submitted by <strong>Mystery User #302</strong> – Location: Department Basement</p>
+        </div>
+      </div>
+    </div>
 
     <h2 class="govuk-heading-m">Next steps</h2>
 
@@ -111,10 +127,9 @@
     </p>
 
     <p class="govuk-body">
-      Or return to <a href="/start" class="govuk-link">Ghost.uk</a> to report something else.
+      Or return to <a href="https://www.gov.uk/" class="govuk-link">GOV.UK</a> to report something else.
     </p>
 
   </div>
 </div>
-
 {% endblock %}

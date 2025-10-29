@@ -15,6 +15,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    <!-- Error summary container -->
+    <div id="error-summary-container"></div>
+
     <h1 class="govuk-heading-l spooky-heading">
       Type of ghost sighting
     </h1>
@@ -62,22 +65,70 @@
         Something lurks here…
       </a>
 
-      <!-- Continue button intentionally not keyboard focusable -->
+      <!-- Continue button (intentionally not keyboard focusable) -->
       <button class="govuk-button govuk-!-margin-top-6" type="submit" tabindex="-1">
-  Continue through the mist
-</button>
+        Continue through the mist
+      </button>
     </form>
 
     <script>
-      // --- Accessibility training intentional failure ---
-      // Button cannot be focused by keyboard users (tabindex=-1)
-      // but ensure mouse clicks still POST correctly
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('sighting-form');
         const spookyButton = form.querySelector('.govuk-button');
+        const errorContainer = document.getElementById('error-summary-container');
+
         spookyButton.addEventListener('click', function (event) {
           event.preventDefault();
-          form.submit();
+
+          // Clear old errors
+          errorContainer.innerHTML = '';
+          document.querySelectorAll('.govuk-form-group--error, .govuk-error-message').forEach(el => {
+            el.classList.remove('govuk-form-group--error');
+            if (el.classList.contains('govuk-error-message')) el.remove();
+          });
+
+          const checked = document.querySelectorAll('input[name="sighting-type"]:checked');
+          const errors = [];
+
+          if (checked.length === 0) {
+            addError('fieldset', 'transparent', 'Select at least one type of ghost');
+          }
+
+          if (errors.length === 0) {
+            form.submit();
+          } else {
+            displayErrorSummary(errors);
+          }
+
+          function addError(groupId, fieldId, message) {
+            const fieldset = form.querySelector('fieldset');
+            fieldset.classList.add('govuk-form-group--error');
+            const errorEl = document.createElement('p');
+            errorEl.className = 'govuk-error-message';
+            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+            fieldset.prepend(errorEl);
+            errors.push({ fieldId, message });
+          }
+
+          function displayErrorSummary(errors) {
+            const summary = document.createElement('div');
+            summary.className = 'govuk-error-summary';
+            summary.setAttribute('aria-labelledby', 'error-summary-title');
+            summary.setAttribute('role', 'alert');
+            summary.setAttribute('tabindex', '-1');
+            summary.innerHTML = `
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                Something spooky is missing
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+                </ul>
+              </div>
+            `;
+            errorContainer.appendChild(summary);
+            summary.focus();
+          }
         });
       });
     </script>

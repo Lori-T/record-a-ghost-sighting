@@ -61,80 +61,75 @@
         </div>
       </div>
 
-      <br>
-
-      <!-- Hidden link for spooky exercise -->
+      <!-- Hidden spooky link -->
       <a href="/question6" id="ghost-link" style="position:absolute;width:0;height:0;overflow:hidden;">
         The air grows colder…
       </a>
 
       <!-- Continue button intentionally not keyboard focusable -->
-      <button class="govuk-button govuk-button--start ghost-button" type="submit" tabindex="-1">
+      <button class="govuk-button govuk-button--start ghost-button govuk-!-margin-top-6"
+              type="submit" tabindex="-1">
         Continue
         <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
              viewBox="0 0 33 40" role="presentation" focusable="false">
-          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
         </svg>
       </button>
     </form>
 
     <script>
-      // --- Validation (same as before) ---
-      document.getElementById('activity-form').addEventListener('submit', function (event) {
-        const errorContainer = document.getElementById('error-summary-container');
-        const activityGroup = document.getElementById('activity-group');
-        errorContainer.innerHTML = '';
-        activityGroup.classList.remove('govuk-form-group--error');
-
-        const oldError = document.querySelector('#activity-group .govuk-error-message');
-        if (oldError) oldError.remove();
-
-        const selected = document.querySelector('input[name="activity"]:checked');
-        const errors = [];
-
-        if (!selected) {
-          event.preventDefault();
-          const errorMessage = 'Select how strong the supernatural activity was';
-          activityGroup.classList.add('govuk-form-group--error');
-          const errorEl = document.createElement('p');
-          errorEl.className = 'govuk-error-message';
-          errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + errorMessage;
-          activityGroup.prepend(errorEl);
-          errors.push({ fieldId: 'weak', message: errorMessage });
-          displayErrorSummary(errors);
-        }
-
-        function displayErrorSummary(errors) {
-          const summary = document.createElement('div');
-          summary.className = 'govuk-error-summary';
-          summary.setAttribute('aria-labelledby', 'error-summary-title');
-          summary.setAttribute('role', 'alert');
-          summary.setAttribute('tabindex', '-1');
-          summary.innerHTML = `
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
-              </ul>
-            </div>
-          `;
-          errorContainer.appendChild(summary);
-          summary.focus();
-        }
-      });
-
-      // --- Accessibility training intentional failure ---
-      // Button cannot be focused by keyboard users (tabindex=-1)
-      // but this ensures mouse clicks still POST correctly
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('activity-form');
         const spookyButton = form.querySelector('.govuk-button');
+        const errorContainer = document.getElementById('error-summary-container');
+        const activityGroup = document.getElementById('activity-group');
 
         spookyButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          form.submit();
+          event.preventDefault(); // prevent instant submit
+
+          // clear old errors
+          errorContainer.innerHTML = '';
+          activityGroup.classList.remove('govuk-form-group--error');
+          const oldError = document.querySelector('#activity-group .govuk-error-message');
+          if (oldError) oldError.remove();
+
+          const selected = document.querySelector('input[name="activity"]:checked');
+          const errors = [];
+
+          if (!selected) {
+            const message = 'Select how strong the supernatural activity was';
+            activityGroup.classList.add('govuk-form-group--error');
+            const errorEl = document.createElement('p');
+            errorEl.className = 'govuk-error-message';
+            errorEl.innerHTML = '<span class="govuk-visually-hidden">Error:</span> ' + message;
+            activityGroup.prepend(errorEl);
+            errors.push({ fieldId: 'weak', message });
+          }
+
+          if (errors.length === 0) {
+            form.submit(); // only submit if valid
+          } else {
+            displayErrorSummary(errors);
+          }
+
+          function displayErrorSummary(errors) {
+            const summary = document.createElement('div');
+            summary.className = 'govuk-error-summary';
+            summary.setAttribute('aria-labelledby', 'error-summary-title');
+            summary.setAttribute('role', 'alert');
+            summary.setAttribute('tabindex', '-1');
+            summary.innerHTML = `
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  ${errors.map(e => `<li><a href="#${e.fieldId}">${e.message}</a></li>`).join('')}
+                </ul>
+              </div>`;
+            errorContainer.appendChild(summary);
+            summary.focus();
+          }
         });
       });
     </script>

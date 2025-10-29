@@ -7,18 +7,18 @@
   <div class="govuk-grid-column-full">
 
     <h1 class="govuk-heading-xl spooky-heading">
-      Record a ghost sighting 
+      Record a ghost sighting
     </h1>
 
     <p class="govuk-body">
       Welcome to the <strong>Department for Supernatural Affairs</strong> service to record a ghost sighting.
-      This haunted GOV.UK-style service contains intentional accessibility issues, your job is to find them all.
+      This haunted GOV.UK-style service contains intentional accessibility issues — your job is to find them all.
     </p>
 
     <p class="govuk-body">
-      Each page of this service contains one or more accessibility issues (and perhaps a lurking ghost 👻).
+      Each page contains one or more accessibility issues (and perhaps a lurking ghost 👻).
     </p>
-  
+
     {{ govukButton({
       text: "Start the haunted service",
       href: "/start",
@@ -30,7 +30,7 @@
     <h2 class="govuk-heading-m">Answers</h2>
     <p class="govuk-body">
       Enter the secret password to unlock the list of intentional accessibility issues.  
-      (Hint: The ghosts will give you a clue to the password to see the answers and get a special <em>spooky</em> treat.)
+      (Hint: the ghosts will whisper clues to the password — reveal them all to claim your <em>spooky</em> badge.)
     </p>
 
     <form id="password-form" class="govuk-form-group">
@@ -62,23 +62,12 @@
         <tbody class="govuk-table__body">
 
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Start page</td>
-            <td class="govuk-table__cell"><a href="/start">/start</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Incorrect heading hierarchy</strong> – main heading uses wrong tag level.</p>
-              <p><strong>Undescriptive link text</strong> – “Find out more” gives no context.</p>
-              <p><strong>Link opens in new tab</strong> – without warning or indication.</p>
-              <p><strong>Inconsistent tab order</strong> – sidebar links are unpredictable when tabbing.</p>
-            </td>
-          </tr>
-
-          <tr class="govuk-table__row">
             <td class="govuk-table__cell">Question 1 – Witness details</td>
             <td class="govuk-table__cell"><a href="/question1">/question1</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Low contrast hint text</strong> – form hints fail colour contrast ratio.</p>
-              <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard navigation.</p>
-              <p><strong>Hidden focusable element</strong> – an invisible link is reachable by keyboard.</p>
+              <p><strong>Low contrast hint text</strong> – text colour fails 1.4.3 contrast ratio.</p>
+              <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> prevents keyboard use (2.1.1).</p>
+              <p><strong>Hidden focusable link</strong> – invisible element reachable by keyboard (1.3.1).</p>
             </td>
           </tr>
 
@@ -86,8 +75,8 @@
             <td class="govuk-table__cell">Question 2 – Type of ghost sighting</td>
             <td class="govuk-table__cell"><a href="/question2">/question2</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Checkboxes without fieldset or legend</strong> – no semantic grouping for screen readers.</p>
-              <p><strong>Unclear instructions</strong> – users are not told they can select more than one.</p>
+              <p><strong>No proper fieldset or legend</strong> – checkboxes not semantically grouped (1.3.1).</p>
+              <p><strong>Continue button not keyboard focusable</strong> – cannot be reached via tab (2.1.1).</p>
             </td>
           </tr>
 
@@ -95,17 +84,18 @@
             <td class="govuk-table__cell">Question 3 – Date and location of sighting</td>
             <td class="govuk-table__cell"><a href="/question3">/question3</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Empty legend</strong> – form fields are not grouped meaningfully.</p>
-              <p><strong>Errors not linked to inputs</strong> – missing ARIA associations.</p>
+              <p><strong>Empty legend</strong> – form fields lack clear group name (1.3.1).</p>
+              <p><strong>Error messages not associated</strong> – missing ARIA relationships (4.1.2).</p>
+              <p><strong>Continue button not focusable</strong> – keyboard users can’t activate it (2.1.1).</p>
             </td>
           </tr>
 
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 4 – What did you see?</td>
+            <td class="govuk-table__cell">Question 4 – Description of sighting</td>
             <td class="govuk-table__cell"><a href="/question4">/question4</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Hidden focusable link</strong> – non-visible interactive element disrupts focus order.</p>
-              <p><strong>Missing label association</strong> – unclear for screen reader users.</p>
+              <p><strong>Hidden focusable link</strong> – disrupts logical focus order (2.4.3).</p>
+              <p><strong>No character count or ARIA live region</strong> – missing dynamic content feedback (4.1.3).</p>
             </td>
           </tr>
 
@@ -113,8 +103,8 @@
             <td class="govuk-table__cell">Question 5 – Supernatural activity intensity</td>
             <td class="govuk-table__cell"><a href="/question5">/question5</a></td>
             <td class="govuk-table__cell">
-              <p><strong>No fieldset or legend</strong> – radio buttons lack question context.</p>
-              <p><strong>Error summary not initially visible</strong> – poor error discoverability.</p>
+              <p><strong>No fieldset or legend</strong> – radio buttons lack context (1.3.1).</p>
+              <p><strong>Keyboard focus issue</strong> – continue button not in tab order (2.4.3).</p>
             </td>
           </tr>
 
@@ -122,8 +112,8 @@
             <td class="govuk-table__cell">Question 6 – Upload evidence</td>
             <td class="govuk-table__cell"><a href="/question6">/question6</a></td>
             <td class="govuk-table__cell">
-              <p><strong>No proper file input label</strong> – unclear what to upload.</p>
-              <p><strong>Missing accessible instructions</strong> – relies solely on visual layout.</p>
+              <p><strong>Incorrectly associated label</strong> – file input lacks explicit connection (1.3.1).</p>
+              <p><strong>No text alternative for instruction</strong> – missing clear guidance for screen readers (3.3.2).</p>
             </td>
           </tr>
 
@@ -131,8 +121,8 @@
             <td class="govuk-table__cell">Check your answers</td>
             <td class="govuk-table__cell"><a href="/checkanswers">/checkanswers</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Undescriptive change links</strong> – “Change” lacks hidden context.</p>
-              <p><strong>No table caption</strong> – unclear content structure for screen readers.</p>
+              <p><strong>“Change” links not descriptive</strong> – lack visually hidden text (2.4.4).</p>
+              <p><strong>Summary list missing caption</strong> – unclear context for screen readers (1.3.1).</p>
             </td>
           </tr>
 
@@ -140,47 +130,19 @@
             <td class="govuk-table__cell">Confirmation page</td>
             <td class="govuk-table__cell"><a href="/confirmation">/confirmation</a></td>
             <td class="govuk-table__cell">
-              <p><strong>All caps heading</strong> – harder to read for some users.</p>
-              <p><strong>No clear route back</strong> – users may not know how to restart.</p>
+              <p><strong>All caps heading</strong> – reduces readability (1.4.8).</p>
+              <p><strong>No clear return path</strong> – poor navigation consistency (2.4.5).</p>
             </td>
           </tr>
 
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Task list</td>
+            <td class="govuk-table__cell">View your reports</td>
             <td class="govuk-table__cell"><a href="/tasklist">/tasklist</a></td>
             <td class="govuk-table__cell">
-              <p><strong>Status relies only on colour</strong> – fails WCAG 1.4.1.</p>
-              <p><strong>No table caption</strong> – screen readers lack context.</p>
+              <p><strong>Status indicated only by colour</strong> – fails 1.4.1 use of colour.</p>
+              <p><strong>Missing table caption</strong> – sighted users see title but SR users do not (1.3.1).</p>
             </td>
           </tr>
-
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Guidance – How to spot a ghost</td>
-            <td class="govuk-table__cell"><a href="/guidance">/guidance</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Decorative images missing alt text</strong> – may confuse screen reader users.</p>
-              <p><strong>Heading order skipped</strong> – h2 used before h1 in sidebar.</p>
-            </td>
-          </tr>
-
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Guidance – Different types of haunting</td>
-            <td class="govuk-table__cell"><a href="/guidance1">/guidance1</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Unlabelled navigation region</strong> – missing ARIA label.</p>
-              <p><strong>Low-contrast links</strong> – blue on grey background.</p>
-            </td>
-          </tr>
-
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Guidance – How to report a haunting</td>
-            <td class="govuk-table__cell"><a href="/guidance2">/guidance2</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Non-descriptive link text</strong> – “record your ghost sighting online” could be clearer.</p>
-              <p><strong>Empty anchor tags</strong> – decorative links serve no function.</p>
-            </td>
-          </tr>
-
         </tbody>
       </table>
     </div>
