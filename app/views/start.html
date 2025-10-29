@@ -1,202 +1,100 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% block pageTitle %}
+  Start page – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <style>
+    .tab-order-sim {
+      flex-direction: row-reverse;
+    }
+
+    /* Remove focus indicator - not accessible */
+    .no-focus-outline:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      background: none !important;
+    }
+  </style>
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      { text: "Home", href: "#" },
+      { text: "Record supernatural sightings", href: "#" },
+      { text: "Record a ghost sighting" }
+    ]
+  }) }}
+{% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-xl spooky-heading">
-      Record a ghost sighting
-    </h1>
+    <h1 class="govuk-heading-xl spooky-heading">Record a ghost sighting</h1>
 
     <p class="govuk-body">
-      Welcome to the <strong>Department for Supernatural Affairs</strong> service to record a ghost sighting.
-      This haunted GOV.UK-style service contains intentional accessibility issues — your job is to find them all.
+      Use this service to tell the <strong>Department for Supernatural Affairs</strong> about a ghost, spirit or haunting you’ve seen.
     </p>
+    <p>Your report helps us track supernatural activity and keep communities safe.</p>
+
+    <h2 class="govuk-heading-m">You can use this service to record:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a single ghost sighting</li>
+      <li>multiple hauntings in the same location</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">You’ll need to tell us:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>where you saw the ghost</li>
+      <li>when you saw it</li>
+      <li>what it looked like (if you could tell)</li>
+    </ul>
 
     <p class="govuk-body">
-      Each page contains one or more accessibility issues (and perhaps a lurking ghost 👻).
+      Do not use this service to report other paranormal activity, such as vampires, werewolves or cursed pumpkins.
     </p>
-
+      
     {{ govukButton({
-      text: "Start the haunted service",
-      href: "/start",
+      text: "Start now",
+      href: "/question1",
       isStartButton: true
     }) }}
 
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    <h1 class="govuk-heading-m">Other ways to submit a ghost sighting</h1>
 
-    <h2 class="govuk-heading-m">Answers</h2>
-    <p class="govuk-body">
-      Enter the secret password to unlock the list of intentional accessibility issues.  
-      (Hint: the ghosts will whisper clues to the password — reveal them all to claim your <em>spooky</em> badge.)
+    <p>
+      You can also <a href="mailto:hauntings@dsa.gov.uk">submit your sighting by email</a>.
     </p>
+     
+  </div>
 
-    <form id="password-form" class="govuk-form-group">
-      <label class="govuk-label" for="trainer-password">Enter password</label>
-      <input class="govuk-input govuk-input--width-20" id="trainer-password" type="password" name="trainer-password">
-      <button class="govuk-button govuk-!-margin-top-2" type="submit">Unlock answers</button>
-    </form>
-
-    <div id="toggle-section" style="display: none; margin-top: 2rem;">
-      <button class="govuk-button govuk-button--secondary" id="toggle-answers"
-              type="button"
-              aria-controls="answers-section"
-              aria-expanded="false">
-        Show answers
-      </button>
-    </div>
-
-    <div id="answers-section" style="display: none; margin-top: 2rem;">
-      <h2 class="govuk-heading-m">Pages in this prototype</h2>
-
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Page name</th>
-            <th scope="col" class="govuk-table__header">URL</th>
-            <th scope="col" class="govuk-table__header">Intentional accessibility issues</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-
-          <!-- START PAGE -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Start page</td>
-            <td class="govuk-table__cell"><a href="/start">/start</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Incorrect heading hierarchy</strong> – more than one <code>h1</code> used on the same page (1.3.1).</p>
-              <p><strong>Undescriptive link text</strong> – “Find out more” gives no context (2.4.4).</p>
-              <p><strong>Link opens in new tab without warning</strong> – missing indication (3.2.5).</p>
-              <p><strong>Focus indicator removed</strong> – <code>.no-focus-outline</code> hides visible focus (2.4.7).</p>
-              <p><strong>Unpredictable tab order</strong> – reversed layout order disrupts logical navigation (2.4.3).</p>
-              <p><strong>Low contrast link styling</strong> – link colour insufficient contrast with background (1.4.3).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 1 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 1 – Witness details</td>
-            <td class="govuk-table__cell"><a href="/question1">/question1</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Low contrast hint text</strong> – text fails colour contrast ratio (1.4.3).</p>
-              <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard order (2.1.1).</p>
-              <p><strong>Hidden focusable link</strong> – invisible element can receive focus (1.3.1).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 2 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 2 – Type of ghost sighting</td>
-            <td class="govuk-table__cell"><a href="/question2">/question2</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>No proper fieldset or legend</strong> – checkboxes not semantically grouped (1.3.1).</p>
-              <p><strong>Continue button not keyboard focusable</strong> – cannot be reached via tab (2.1.1).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 3 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 3 – Date and location of sighting</td>
-            <td class="govuk-table__cell"><a href="/question3">/question3</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Empty legend</strong> – no clear group name for date fields (1.3.1).</p>
-              <p><strong>Error messages not linked to inputs</strong> – missing ARIA associations (4.1.2).</p>
-              <p><strong>Continue button not focusable</strong> – keyboard users cannot activate it (2.1.1).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 4 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 4 – Description of sighting</td>
-            <td class="govuk-table__cell"><a href="/question4">/question4</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Hidden focusable link</strong> – disrupts logical focus order (2.4.3).</p>
-              <p><strong>No character count or ARIA live region</strong> – users not informed of text length (4.1.3).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 5 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 5 – Supernatural activity intensity</td>
-            <td class="govuk-table__cell"><a href="/question5">/question5</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>No fieldset or legend</strong> – radio buttons lack context (1.3.1).</p>
-              <p><strong>Keyboard focus issue</strong> – continue button not in tab order (2.4.3).</p>
-            </td>
-          </tr>
-
-          <!-- QUESTION 6 -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Question 6 – Upload evidence</td>
-            <td class="govuk-table__cell"><a href="/question6">/question6</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Incorrect label association</strong> – unclear which field label applies (1.3.1).</p>
-              <p><strong>Missing accessible instructions</strong> – unclear purpose for assistive tech users (3.3.2).</p>
-            </td>
-          </tr>
-
-          <!-- CHECK ANSWERS -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Check your answers</td>
-            <td class="govuk-table__cell"><a href="/checkanswers">/checkanswers</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Undescriptive “Change” links</strong> – missing visually hidden context (2.4.4).</p>
-              <p><strong>No table caption</strong> – unclear structure for screen readers (1.3.1).</p>
-            </td>
-          </tr>
-
-          <!-- CONFIRMATION -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Confirmation page</td>
-            <td class="govuk-table__cell"><a href="/confirmation">/confirmation</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>All caps heading</strong> – reduces readability (1.4.8).</p>
-              <p><strong>No clear route back</strong> – poor navigation consistency (2.4.5).</p>
-            </td>
-          </tr>
-
-          <!-- VIEW REPORTS -->
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">View your reports</td>
-            <td class="govuk-table__cell"><a href="/tasklist">/tasklist</a></td>
-            <td class="govuk-table__cell">
-              <p><strong>Status relies only on colour</strong> – fails 1.4.1 Use of colour.</p>
-              <p><strong>No table caption</strong> – screen readers lack context (1.3.1).</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+  <div class="govuk-grid-column-one-third">
+    <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+      <h2 class="govuk-heading-m" id="subsection-title">Related content</h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <a href="/guidance1" class="no-focus-outline">How to spot a ghost</a>
+          </li>
+          <li>
+            <a href="#" target="_blank" class="govuk-!-font-weight-bold no-focus-outline">
+              Find out more
+            </a>
+          </li>
+          <li>
+            <a href="/guidance" class="no-focus-outline">Known haunted locations in the UK</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
   </div>
 </div>
-
-<script>
-  const form = document.getElementById('password-form');
-  const answersSection = document.getElementById('answers-section');
-  const toggleSection = document.getElementById('toggle-section');
-  const toggleButton = document.getElementById('toggle-answers');
-
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const password = document.getElementById('trainer-password').value.trim().toLowerCase();
-
-    if (password === 'spooky') {
-      toggleSection.style.display = 'block';
-      form.style.display = 'none';
-    } else {
-      alert('👻 Incorrect password! The spirits are displeased. Try again.');
-    }
-  });
-
-  toggleButton.addEventListener('click', function () {
-    const visible = answersSection.style.display === 'block';
-    answersSection.style.display = visible ? 'none' : 'block';
-    toggleButton.textContent = visible ? 'Show answers' : 'Hide answers';
-    toggleButton.setAttribute('aria-expanded', (!visible).toString());
-  });
-</script>
-
 {% endblock %}
