@@ -54,7 +54,14 @@
       --spooky-accent-light: #cdb4ff;     /* lighter ghostly purple */
       --spooky-bg: #1b103a;               /* midnight background */
       --pumpkin-orange: #ff9100;
+       --govuk-focus-colour: #00b140 !important; /* spooky green */
     }
+/* Optional – improves contrast for skip link & keyboard focus */
+.govuk-skip-link:focus {
+  background-color: #00b140 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 8px rgba(0, 177, 64, 0.6);
+}
 
     html, body {
       --govuk-link-colour: var(--spooky-accent) !important;
@@ -389,20 +396,21 @@
   color: #0b0c0c !important;
 }
 
-/* Training tag — bright supernatural green */
-.govuk-tag {
-  background-color: #00b140; /* accessible bright green */
+/* ============================
+   Phase banner "Training" tag – scoped styling only
+   ============================ */
+.govuk-phase-banner .govuk-tag {
+  background-color: #00b140; /* bright green */
   color: #ffffff;
   font-weight: 700;
-  border: 2px solid #007f2e; /* darker green border */
+  border: 2px solid #007f2e;
   box-shadow: 0 0 4px rgba(0, 177, 64, 0.4);
   text-transform: none;
   letter-spacing: 0.5px;
 }
 
-/* Slight glow on hover/focus */
-.govuk-tag:hover,
-.govuk-tag:focus {
+.govuk-phase-banner .govuk-tag:hover,
+.govuk-phase-banner .govuk-tag:focus {
   background-color: #009e38;
   border-color: #00b140;
   box-shadow: 0 0 8px rgba(0, 255, 128, 0.6);
