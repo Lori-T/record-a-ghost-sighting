@@ -239,37 +239,96 @@
   padding: 0.25rem 0.5rem;
 }
 
+/* Hidden spooky links — detectable by accessibility tools */
+.spooky-hidden {
+  position: absolute;
+  left: -9999px; /* moves it off-screen */
+  opacity: 0.01; /* nearly invisible but still present */
+  transition: all 0.4s ease;
+  z-index: 2000; /* higher than headers/footers */
+}
+
+.spooky-hidden:focus,
+.spooky-hidden:hover {
+  left: 0; /* bring it back on screen */
+  opacity: 1;
+  background: #fbfdfd;
+  color: #00ff00;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 999;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 12px #00ff00;
+}
+
+/* Optional flicker effect for extra spookiness */
+.spooky-hidden:focus {
+  animation: flicker 1s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+/* Per-page positioning */
+.ghost-top-left:focus,
+.ghost-top-left:hover {
+  top: 20px;
+  left: 20px;
+}
+
+.ghost-bottom-right:focus,
+.ghost-bottom-right:hover {
+  bottom: 30px;
+  right: 40px;
+}
+
+.ghost-middle:focus,
+.ghost-middle:hover {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ghost-behind-button:focus,
+.ghost-behind-button:hover {
+  top: 80%;
+  left: 10%;
+}
+
+/* ============================
+   Ghost logo – soft glow only
+   ============================ */
+
+/* Remove background “mist” entirely */
+.govuk-header__logo {
+  background: none !important;
+  border-radius: 0;
+  padding: 0.25rem 0; /* small top/bottom spacing only */
+}
+
 .ghost-logo {
   display: block;
-  max-height: 85px;
+  max-height: 120px; /* slightly larger for balance */
   object-fit: contain;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.9))
-          drop-shadow(0 0 8px rgba(255,255,255,0.6));
-  animation: ghostlyGlow 4s ease-in-out infinite;
+
+  /* subtle edge-only glow for visibility */
+  filter:
+    drop-shadow(0 0 2px rgba(255,255,255,0.5))
+    drop-shadow(0 0 5px rgba(255,255,255,0.6))
+    drop-shadow(0 0 8px rgba(255,255,255,0.7));
+
   transition: filter 0.3s ease-in-out;
 }
 
 .ghost-logo:hover {
-  filter: drop-shadow(0 0 10px var(--pumpkin-orange))
-          brightness(1.3);
+  filter:
+    drop-shadow(0 0 4px rgba(255,255,255,0.7))
+    drop-shadow(0 0 8px rgba(255,255,255,0.9))
+    drop-shadow(0 0 12px var(--pumpkin-orange))
+    brightness(1.3);
 }
-
-/* pulsing glow animation */
-@keyframes ghostlyGlow {
-  0% {
-    filter: drop-shadow(0 0 2px rgba(255,255,255,0.6))
-            drop-shadow(0 0 4px rgba(255,255,255,0.5));
-  }
-  50% {
-    filter: drop-shadow(0 0 6px rgba(255,255,255,0.9))
-            drop-shadow(0 0 10px rgba(255,255,255,0.8));
-  }
-  100% {
-    filter: drop-shadow(0 0 2px rgba(255,255,255,0.6))
-            drop-shadow(0 0 4px rgba(255,255,255,0.5));
-  }
-}
-
 
 
 /* Error message text */
