@@ -2,15 +2,27 @@
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% block header %}
-  {{ govukHeader({
-    homepageUrl: "/",
-    logotypeText: "GHOST🎃UK",
-    serviceName: serviceName
-  }) }}
-  {{ govukServiceNavigation({
-    serviceName: serviceName
-  }) }}
+  <header class="govuk-header" role="banner" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container">
+      <div class="govuk-header__logo">
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+                   <img src="{{asset_path}}images/ghost_logo.png"
+               alt="Department for Supernatural Affairs"
+               class="ghost-logo"
+               width="250" height="60">
+        </a>
+      </div>
+      {% if serviceName %}
+      <div class="govuk-header__content">
+        <a href="/" class="govuk-header__link govuk-header__service-name">
+          {{ serviceName }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
 {% endblock %}
+
 
 {% block stylesheets %}
   {{ super() }}
@@ -52,31 +64,21 @@
       color: var(--spooky-accent-light) !important;
     }
 
-    /* Pumpkin emoji tweaks */
-    .govuk-header__logotype-text {
-      letter-spacing: 0.5px;
-      font-family: "GDS Transport", Arial, sans-serif;
-      text-shadow: 0 0 6px var(--pumpkin-orange), 0 0 10px #ffb347;
-    }
+    
+    
+   /* Force service name link to white text */
+.govuk-header__link.govuk-header__service-name {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
 
-    .govuk-header__link--homepage:hover .govuk-header__logotype-crown,
-    .govuk-header__link--homepage:hover .govuk-header__logotype-text {
-      color: var(--spooky-accent-light) !important;
-      fill: var(--spooky-accent-light) !important;
-      text-shadow: 0 0 6px var(--pumpkin-orange), 0 0 12px #ffb347;
-    }
-
-    .govuk-header__link--homepage:not(:focus) {
-      background: none !important;
-      background-color: transparent !important;
-    }
-
-    /* Header link text */
-    .govuk-header__link--homepage,
-    .govuk-header__link--service-name {
-      color: #ffffff !important;
-      text-decoration: none;
-    }
+/* On hover/focus — soft spooky glow */
+.govuk-header__link.govuk-header__service-name:hover,
+.govuk-header__link.govuk-header__service-name:focus {
+  color: var(--spooky-accent-light) !important;
+  text-shadow: 0 0 6px var(--spooky-accent-light);
+}
 
     .govuk-header__link--homepage:hover,
     .govuk-header__link--service-name:hover {
@@ -155,38 +157,127 @@
     }
 
     /* FOOTER ======================================= */
-    .govuk-footer {
-      background: var(--spooky-bg) !important;
-      border-top: 4px solid var(--spooky-accent) !important;
-      color: #e0e0ff !important;
-      background-image: url("/public/images/spooky-footer-mist.png");
-      background-repeat: repeat-x;
-      background-position: bottom;
-      background-size: contain;
-      padding-top: 2rem;
-    }
+.govuk-footer {
+  background: var(--spooky-bg) !important;
+  border-top: 4px solid var(--spooky-accent) !important;
+  color: #e0e0ff !important;
 
-    .govuk-footer a {
-      color: var(--spooky-accent-light) !important;
-    }
+  /* mist image */
+  background-image: url("/public/images/spooky-footer-mist.png");
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  /* make the mist a fixed height so it reliably reaches the bottom */
+  background-size: auto 90px;
 
-    .govuk-footer a:hover {
-      color: white !important;
-    }
+  padding-top: 2rem;
+  padding-bottom: 2rem !important;
+  margin-bottom: 0 !important;
 
-    /* Remove Crown logo entirely */
-    .govuk-footer__licence-logo,
-    .govuk-footer__copyright-logo {
-      display: none !important;
-    }
+  position: relative;       /* <- needed for the seam fixer */
+  overflow: hidden;         /* keep pseudo-element clipped */
+}
+/* Remove original Crown and licence logos */
+.govuk-footer__licence-logo,
+.govuk-footer__copyright-logo,
+.govuk-footer__crown {
+  display: none !important;
+}
 
-    /* Match Accessibility Advent footer layout */
-    .govuk-footer__meta {
-      text-align: center;
-    }
-    .govuk-footer__meta-item--grow {
-      flex-grow: 1;
-    }
+/* Add a 🎃 pumpkin before the copyright text */
+.govuk-footer__copyright::before {
+  content: "🎃 ";
+  font-size: 1.2rem;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+  filter: drop-shadow(0 0 4px var(--spooky-accent-light));
+  transition: filter 0.3s ease;
+}
+/* Tiny seam fixer to cover any 1px aliasing/rounding at the very bottom */
+.govuk-footer::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 6px;                            /* small paint strip */
+  background-color: var(--spooky-bg);     /* same as footer bg */
+}
+
+/* Footer links */
+.govuk-footer a { color: var(--spooky-accent-light) !important; }
+.govuk-footer a:hover { color: #ffffff !important; }
+
+/* Remove Crown logo entirely */
+.govuk-footer__licence-logo,
+.govuk-footer__copyright-logo { display: none !important; }
+
+/* footer layout */
+.govuk-footer__meta { text-align: center; }
+.govuk-footer__meta-item--grow { flex-grow: 1; }
+
+/* Custom ghost header logo styling */
+.ghost-logo {
+  display: block;
+  max-height: 60px;
+  object-fit: contain;
+  transition: filter 0.3s ease-in-out;
+  filter: drop-shadow(0 0 6px var(--spooky-accent-light));
+}
+
+.ghost-logo:hover {
+  filter: drop-shadow(0 0 10px var(--pumpkin-orange)) brightness(1.2);
+}
+
+/* Remove default GOV.UK header spacing if needed */
+.govuk-header__logo {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.govuk-header {
+  background-color: var(--spooky-bg) !important;
+  border-bottom: 8px solid var(--spooky-accent) !important;
+  background-image: url("/public/images/spooky-header-bats.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+}
+
+
+/* Error message text */
+.govuk-error-message {
+  color: #00b140 !important; /* bright green instead of red */
+}
+
+/* Error field borders and glow */
+.govuk-form-group--error .govuk-input,
+.govuk-form-group--error .govuk-textarea,
+.govuk-form-group--error .govuk-select {
+  border-color: #00b140 !important;
+  box-shadow: 0 0 6px 2px rgba(0, 177, 64, 0.4) !important;
+  background-color: rgba(0, 255, 0, 0.03) !important;
+}
+
+/* Highlight entire form group */
+.govuk-form-group--error {
+  border-left: 4px solid #00b140 !important;
+  padding-left: 0.75rem;
+}
+
+/* Error summary box */
+.govuk-error-summary {
+  border-color: #00b140 !important;
+  box-shadow: 0 0 10px rgba(0, 177, 64, 0.4);
+}
+
+/* Error summary text + links */
+.govuk-error-summary__title,
+.govuk-error-summary__list a {
+  color: #00b140 !important;
+}
+
+.govuk-error-summary__list a:hover {
+  color: #7fff7f !important;
+  text-shadow: 0 0 4px #7fff7f;
+}
 
   </style>
 {% endblock %}
@@ -199,17 +290,13 @@
            { href: "/accessibility", text: "Accessibility statement" },
         { href: "/tasklist", text: "View your reports" },
         { href: "/guidance", text: "How to spot a ghost" },
-        { href: "https://github.com/lorithomson", text: "GitHub" },
+        { href: "https://github.com/Lori-T", text: "GitHub" },
         { href: "https://accessibility-advent.lorithomson.co.uk", text: "Accessibility Advent" }
       ],
       visuallyHiddenTitle: "Footer links"
     },
     contentLicence: {
-      text: "All content is haunted under the Open Government Licence v3.0",
-      href: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
-    },
-    copyright: {
-      text: "© 2025 Department for Supernatural Affairs — created by Lori Thomson"
-    }
+      text: "© 2025 Department for Supernatural Affairs "
+         }
   }) }}
 {% endblock %}
