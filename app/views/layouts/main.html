@@ -427,6 +427,65 @@
   text-shadow: 0 0 3px var(--spooky-accent-light);
 }
 
+
+
+/* Buttons (GOV.UK uses box-shadow for focus) */
+.govuk-button:focus,
+.govuk-button--start:focus {
+  outline: 3px solid transparent !important;
+  box-shadow: 0 0 0 4px #00b140 !important;
+}
+
+/* Text inputs, textareas, selects */
+.govuk-input:focus,
+.govuk-textarea:focus,
+.govuk-select:focus {
+  outline: 3px solid transparent !important;
+  box-shadow: 0 0 0 3px #00b140 !important;
+}
+
+/* Radios & checkboxes (focus ring draws on the pseudo box) */
+.govuk-radios__input:focus + .govuk-radios__label::before,
+.govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
+  box-shadow: 0 0 0 3px #00b140 !important;
+}
+
+/* Skip link */
+.govuk-skip-link:focus {
+  background-color: #00b140 !important;
+  color: #000 !important;
+  box-shadow: 0 0 0 3px #00b140 !important;
+}
+
+/* Details summary */
+.govuk-details__summary:focus {
+  outline: 3px solid #00b140 !important;
+  box-shadow: 0 0 0 3px #00b140 !important;
+}
+
+/* Tabs */
+.govuk-tabs__tab:focus {
+  box-shadow: 0 0 0 3px #00b140 !important;
+}
+
+/* Keep input + button on one line and aligned */
+.password-inline{
+  display:flex;
+  align-items:center;   /* vertical alignment */
+  gap:1rem;             /* space between input and button */
+  flex-wrap:wrap;       /* lets it wrap on small screens */
+}
+
+/* Remove default top margin that pushes the button down */
+.password-inline .govuk-button{
+  margin:0 !important;
+}
+
+/* Mobile: stack neatly */
+@media (max-width:640px){
+  .password-inline{ flex-direction:column; align-items:flex-start; }
+  .password-inline .govuk-button{ width:auto; }
+}
   </style>
 {% endblock %}
 
