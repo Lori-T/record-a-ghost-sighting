@@ -12,7 +12,7 @@
 
     <p class="govuk-body">
       Welcome to the <strong>Department for Supernatural Affairs</strong> service to record a ghost sighting.
-      This haunted GOV.UK-style service contains intentional accessibility issues — your job is to find them all.
+      This haunted GOV.UK-style service contains intentional accessibility issues — your job is to find them all. You can use spooky tools like <a href="https://chromewebstore.google.com/detail/wave-evaluation-tool/" class="govuk-link">Wave</a>, navigate using your keyboard or use other automated and manual tools to help find them. Some might be tricker than others. 
     </p>
 
     <p class="govuk-body">
@@ -69,111 +69,141 @@
           </thead>
           <tbody class="govuk-table__body">
 
-            <!-- START PAGE -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Start page</td>
-              <td class="govuk-table__cell"><a href="/start">/start</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Incorrect heading hierarchy</strong> – more than one <code>h1</code> used on the same page (1.3.1).</p>
-                <p><strong>Undescriptive link text</strong> – “Find out more” gives no context (2.4.4).</p>
-                <p><strong>Link opens in new tab without warning</strong> – missing indication (3.2.5).</p>
-                <p><strong>Focus indicator removed</strong> – <code>.no-focus-outline</code> hides visible focus (2.4.7).</p>
-                <p><strong>Unpredictable tab order</strong> – reversed layout order disrupts logical navigation (2.4.3).</p>
-                <p><strong>Low contrast link styling</strong> – link colour insufficient contrast with background (1.4.3).</p>
-              </td>
-            </tr>
+         <!-- START PAGE -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Start page</td>
+  <td class="govuk-table__cell"><a href="/start">/start</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Incorrect heading hierarchy</strong> – more than one <code>h1</code> used on the same page (1.3.1).</p>
+    <p><strong>Undescriptive link text</strong> – “Find out more” gives no context (2.4.4).</p>
+    <p><strong>Link opens in new tab without warning</strong> – <code>target="_blank"</code> used without informing users (3.2.5).</p>
+    <p><strong>Focus indicator removed</strong> – <code>.no-focus-outline</code> hides visible focus (2.4.7).</p>
+    <p><strong>Unpredictable tab order</strong> – reversed layout disrupts logical keyboard navigation (2.4.3).</p>
+    <p><strong>Low contrast link styling</strong> – link colour insufficient contrast with background (1.4.3).</p>
+    <p><strong>Low contrast focus indicator</strong> – yellow focus outline on white service name text fails non-text contrast (1.4.11).</p>
+  </td>
+</tr>
 
             <!-- QUESTION 1 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 1 – Witness details</td>
-              <td class="govuk-table__cell"><a href="/question1">/question1</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Low contrast hint text</strong> – text fails colour contrast ratio (1.4.3).</p>
-                <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard order (2.1.1).</p>
-                <p><strong>Hidden focusable link</strong> – invisible element can receive focus (1.3.1).</p>
-              </td>
-            </tr>
+          <tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 1 – Witness details</td>
+  <td class="govuk-table__cell"><a href="/question1">/question1</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Low contrast error text</strong> – green error messages may not meet minimum contrast ratio (1.4.3).</p>
+    <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard navigation (2.1.1).</p>
+    <p><strong>Hidden focusable link</strong> – off-screen ghost clue link can receive focus and confuse order (1.3.1).</p>
+    <p><strong>Low contrast focus indicator</strong> – yellow focus outline on white service name text does not meet non-text contrast requirements (1.4.11).</p>
+  </td>
+</tr>
 
-            <!-- QUESTION 2 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 2 – Type of ghost sighting</td>
-              <td class="govuk-table__cell"><a href="/question2">/question2</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>No proper fieldset or legend</strong> – checkboxes not semantically grouped (1.3.1).</p>
-                <p><strong>Continue button not keyboard focusable</strong> – cannot be reached via tab (2.1.1).</p>
-              </td>
-            </tr>
+          <!-- QUESTION 2 -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 2 – Type of ghost sighting</td>
+  <td class="govuk-table__cell"><a href="/question2">/question2</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>No proper fieldset or legend</strong> – checkboxes not semantically grouped or clearly described (1.3.1).</p>
+    <p><strong>Continue button not keyboard focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard navigation (2.1.1).</p>
+    <p><strong>Hidden focusable link</strong> – off-screen ghost clue can receive focus and confuse users (1.3.1).</p>
+    <p><strong>Low contrast error text</strong> – green error messages may not meet minimum contrast ratio (1.4.3).</p>
+    <p><strong>Low contrast focus indicator</strong> – yellow focus outline on white header text fails non-text contrast (1.4.11).</p>
+  </td>
+</tr>
 
-            <!-- QUESTION 3 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 3 – Date and location of sighting</td>
-              <td class="govuk-table__cell"><a href="/question3">/question3</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Empty legend</strong> – no clear group name for date fields (1.3.1).</p>
-                <p><strong>Error messages not linked to inputs</strong> – missing ARIA associations (4.1.2).</p>
-                <p><strong>Continue button not focusable</strong> – keyboard users cannot activate it (2.1.1).</p>
-              </td>
-            </tr>
+         <!-- QUESTION 3 -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 3 – Date and location of sighting</td>
+  <td class="govuk-table__cell"><a href="/question3">/question3</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Empty legend</strong> – the date fieldset has no descriptive legend, so screen readers can’t identify the grouped inputs (1.3.1).</p>
+    <p><strong>Error messages not linked to inputs</strong> – dynamically added messages lack ARIA references such as <code>aria-describedby</code> or <code>aria-invalid</code> (4.1.2).</p>
+    <p><strong>Continue button not focusable</strong> – <code>tabindex="-1"</code> removes the button from the focus order (2.1.1).</p>
+    <p><strong>Hidden focusable link</strong> – ghost clue link is visually hidden but can still receive keyboard focus (1.3.1).</p>
+    <p><strong>Low contrast error styling</strong> – bright green text and outlines may not meet minimum contrast ratio against white background (1.4.3).</p>
+  </td>
+</tr>
 
-            <!-- QUESTION 4 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 4 – Description of sighting</td>
-              <td class="govuk-table__cell"><a href="/question4">/question4</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Hidden focusable link</strong> – disrupts logical focus order (2.4.3).</p>
-                <p><strong>No character count or ARIA live region</strong> – users not informed of text length (4.1.3).</p>
-              </td>
-            </tr>
+         <!-- QUESTION 4 -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 4 – Description of sighting</td>
+  <td class="govuk-table__cell"><a href="/question4">/question4</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Hidden focusable link</strong> – ghost clue link is visually hidden but can still receive focus, disrupting logical navigation (2.4.3).</p>
+    <p><strong>No character count or ARIA live region</strong> – users are not informed how much text they can enter (4.1.3).</p>
+    <p><strong>Continue button not keyboard focusable</strong> – <code>tabindex="-1"</code> removes the button from the tab order (2.1.1).</p>
+    <p><strong>Error message not linked to input</strong> – no <code>aria-describedby</code> relationship between the error and the textarea (4.1.2).</p>
+    <p><strong>Low contrast error styling</strong> – bright green text and outlines may not meet contrast ratio requirements (1.4.3).</p>
+  </td>
+</tr>
 
-            <!-- QUESTION 5 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 5 – Supernatural activity intensity</td>
-              <td class="govuk-table__cell"><a href="/question5">/question5</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>No fieldset or legend</strong> – radio buttons lack context (1.3.1).</p>
-                <p><strong>Keyboard focus issue</strong> – continue button not in tab order (2.4.3).</p>
-              </td>
-            </tr>
 
-            <!-- QUESTION 6 -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Question 6 – Upload evidence</td>
-              <td class="govuk-table__cell"><a href="/question6">/question6</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Incorrect label association</strong> – unclear which field label applies (1.3.1).</p>
-                <p><strong>Missing accessible instructions</strong> – unclear purpose for assistive tech users (3.3.2).</p>
-              </td>
-            </tr>
+          <!-- QUESTION 5 -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 5 – Supernatural activity intensity</td>
+  <td class="govuk-table__cell"><a href="/question5">/question5</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>No fieldset or legend</strong> – radio buttons are not grouped semantically, so the question lacks context for screen readers (1.3.1).</p>
+    <p><strong>Error message not linked to radio group</strong> – error text is not programmatically tied to the inputs (4.1.2).</p>
+    <p><strong>Hidden focusable link</strong> – the spooky bat clue can still receive focus even though it’s visually hidden (2.4.3).</p>
+    <p><strong>Continue button not keyboard focusable</strong> – <code>tabindex="-1"</code> removes it from the tab order (2.1.1).</p>
+    <p><strong>Low contrast error styling</strong> – green error text and outlines may not meet minimum contrast ratio requirements (1.4.3).</p>
+  </td>
+</tr>
 
-            <!-- CHECK ANSWERS -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Check your answers</td>
-              <td class="govuk-table__cell"><a href="/checkanswers">/checkanswers</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Undescriptive “Change” links</strong> – missing visually hidden context (2.4.4).</p>
-                <p><strong>No table caption</strong> – unclear structure for screen readers (1.3.1).</p>
-              </td>
-            </tr>
 
-            <!-- CONFIRMATION -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">Confirmation page</td>
-              <td class="govuk-table__cell"><a href="/confirmation">/confirmation</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>All caps heading</strong> – reduces readability (1.4.8).</p>
-                <p><strong>No clear route back</strong> – poor navigation consistency (2.4.5).</p>
-              </td>
-            </tr>
+<!-- QUESTION 6 -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Question 6 – Upload evidence</td>
+  <td class="govuk-table__cell"><a href="/question6">/question6</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Incorrect label association</strong> – label and hint are not programmatically linked to the file input (1.3.1).</p>
+    <p><strong>Missing accessible instructions</strong> – unclear purpose and file type guidance for assistive technology users (3.3.2).</p>
+    <p><strong>Hidden focusable link</strong> – ghost clue link is visually hidden but can still receive focus (2.4.3).</p>
+    <p><strong>Continue button not keyboard focusable</strong> – <code>tabindex="-1"</code> removes it from keyboard navigation (2.1.1).</p>
+    <p><strong>Low contrast error styling</strong> – green error text and outlines may not meet minimum contrast requirements (1.4.3).</p>
+    <p><strong>Error message not linked to input</strong> – error text lacks an <code>aria-describedby</code> association with the file field (4.1.2).</p>
+  </td>
+</tr>
+
+
+
+           <!-- CHECK ANSWERS -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Check your answers</td>
+  <td class="govuk-table__cell"><a href="/checkanswers">/checkanswers</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>Undescriptive “Change” links</strong> – identical link text without hidden context makes it unclear what each link changes (2.4.4).</p>
+    <p><strong>No table caption or summary</strong> – screen readers cannot identify what information this list represents (1.3.1).</p>
+    <p><strong>Inconsistent heading hierarchy</strong> – the secondary heading does not follow logical structure after the page title (1.3.1).</p>
+    <p><strong>Unclear submission instructions</strong> – context before the “Accept and send” button is not programmatically associated (3.3.2).</p>
+    <p><strong>Keyboard focus loss after submission</strong> – no focus management provided, causing potential disorientation for keyboard users (2.4.3).</p>
+  </td>
+</tr>
+
+
+           <!-- CONFIRMATION -->
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">Confirmation page</td>
+  <td class="govuk-table__cell"><a href="/confirmation">/confirmation</a></td>
+  <td class="govuk-table__cell">
+    <p><strong>All caps heading</strong> – “REPORT COMPLETE” reduces readability for users with dyslexia or visual impairments (1.4.8).</p>
+    <p><strong>No clear route back</strong> – no consistent navigation link to return to the homepage or previous sections (2.4.5).</p>
+    <p><strong>Confirmation message not programmatically identified</strong> – the GOV.UK panel lacks an ARIA role or landmark for assistive technologies (1.3.1).</p>
+    <p><strong>No focus management after submission</strong> – keyboard focus is not moved to the confirmation message when the page loads (2.4.3).</p>
+    <p><strong>Skipped heading levels</strong> – heading structure may not follow logical order, reducing navigability for screen reader users (1.3.1).</p>
+  </td>
+</tr>
+
 
             <!-- VIEW REPORTS -->
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">View your reports</td>
-              <td class="govuk-table__cell"><a href="/tasklist">/tasklist</a></td>
-              <td class="govuk-table__cell">
-                <p><strong>Status relies only on colour</strong> – fails 1.4.1 Use of colour.</p>
-                <p><strong>No table caption</strong> – screen readers lack context (1.3.1).</p>
-              </td>
-            </tr>
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">View your reports</td>
+  <td class="govuk-table__cell"><a href="/tasklist">/tasklist</a></td>
+  <td class="govuk-table__cell">
+        <p><strong>No table caption</strong> – the main table has no caption or ARIA label describing its content. (1.3.1).</p>
+        <p><strong>Inconsistent heading hierarchy</strong> – heading levels do not    llow a clear structure within summary cards (1.3.1).</p>
+      </td>
+</tr>
+
           </tbody>
         </table>
       </div> <!-- end answers-section -->

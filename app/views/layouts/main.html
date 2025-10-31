@@ -67,8 +67,7 @@
       --govuk-link-colour: var(--spooky-accent) !important;
       --govuk-link-hover-colour: var(--spooky-accent-light) !important;
       --govuk-link-visited-colour: var(--spooky-accent-dark) !important;
-      --govuk-focus-colour: var(--spooky-accent-light) !important;
-      --govuk-header-border-color: var(--spooky-accent) !important;
+           --govuk-header-border-color: var(--spooky-accent) !important;
     }
 
     /* HEADER ======================================= */
@@ -486,6 +485,35 @@
   .password-inline{ flex-direction:column; align-items:flex-start; }
   .password-inline .govuk-button{ width:auto; }
 }
+
+/* ============================
+   Override GOV.UK Transport font → Arial
+   ============================ */
+
+html, body,
+.govuk-body,
+.govuk-heading-xl,
+.govuk-heading-l,
+.govuk-heading-m,
+.govuk-heading-s,
+.govuk-label,
+.govuk-hint,
+.govuk-input,
+.govuk-textarea,
+.govuk-select,
+.govuk-button,
+.govuk-phase-banner,
+.govuk-link {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Ensure headings keep good weight */
+.govuk-heading-xl,
+.govuk-heading-l,
+.govuk-heading-m,
+.govuk-heading-s {
+  font-weight: 700 !important;
+}
   </style>
 {% endblock %}
 
@@ -494,11 +522,12 @@
     meta: {
       items: [
            { href: "/manage-prototype/clear-data", text: "Clear data" },
-           { href: "/accessibility", text: "Accessibility statement" },
-        { href: "/tasklist", text: "View your reports" },
+                  { href: "/tasklist", text: "View your reports" },
         { href: "/guidance", text: "How to spot a ghost" },
-        { href: "https://github.com/Lori-T", text: "GitHub" },
-        { href: "https://accessibility-advent.lorithomson.co.uk", text: "Accessibility Advent" }
+         { href: "/accessibility", text: "Accessibility statement" },
+          { href: "/about", text: "About this service" },
+        { href: "https://github.com/Lori-T", text: "GitHub" }
+       
       ],
       visuallyHiddenTitle: "Footer links"
     },
