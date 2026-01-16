@@ -1,5 +1,5 @@
 <h1>About the Record a ghost sighting training prototype</h1>
-Record a ghost sighting is an accessibility training resource created by Lori Thomson. It has been designed to help people learn how to find and understand accessibility issues in a fun and memorable way. Each page contains intentional accessibility issues that learners can identify, test and discuss.
+<a href="https://ghost-sighting.lorithomson.co.uk/">Record a ghost sighting</a> is an accessibility training resource. It has been designed to help people learn how to find and understand accessibility issues in a fun and memorable way. Each page contains intentional accessibility issues that learners can identify, test and discuss.
 
 <h2>Inspiration</h2>
 This training prototype takes inspiration from Beverley Newing's “Record a goose sighting” accessibility exercise. ,
