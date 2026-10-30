@@ -12,7 +12,7 @@ This resource is designed for workshops, self-led learning and team exercises. E
 </p>
 
 <p>
-If you'd like to run this as a training session, you can <a href="https://github.com/Lori-T/record-a-ghost-sighting/raw/main/app/assets/images/How_to_be_a_good_ghost_spotter_accessibility.pptx">download the PowerPoint presentation with speaker notes</a>.
+If you'd like to run this as a training session, you can <a href="https://ghost-sighting.lorithomson.co.uk/assets/images/How_to_be_a_good_ghost_spotter_accessibility.pptx">download the PowerPoint presentation with speaker notes</a>.
 </p>
 
 <h2>Contribute or get in touch</h2>
