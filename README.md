@@ -7,7 +7,7 @@ This training prototype takes inspiration from Beverley Newing's “Record a goo
 
 <h2>Purpose</h2>
 This resource is designed for workshops, self-led learning and team exercises. Each page intentionally fails one or more WCAG 2.2 AA criteria. It encourages learners to test pages using a range of tools and assistive technologies, and to discuss the impact of these issues on real users.
-If you'd like to use this as a training session you can <a href ="[https://ghost-sighting.lorithomson.co.uk/public/images/ghost-accessibility-exercise.pptx](https://github.com/Lori-T/record-a-ghost-sighting/blob/main/app/assets/images/How%20to%20be%20a%20good%20ghost%20spotter%20-%20accessibility%20exercise.pptx)">download a powerpoint presentation with speaker notes for the session.</a> 
+If you'd like to use this as a training session you can <a href ="https://github.com/Lori-T/record-a-ghost-sighting/blob/main/app/assets/images/How%20to%20be%20a%20good%20ghost%20spotter%20-%20accessibility%20exercise.pptx">download a powerpoint presentation with speaker notes for the session.</a> 
 
 <h2>Contribute or get in touch</h2>
 This resource is not perfect and welcomes contribution from the accessibility community to improve and expand its content.
