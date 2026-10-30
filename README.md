@@ -6,8 +6,14 @@ This training prototype takes inspiration from Beverley Newing's “Record a goo
 "Record a ghost sighting" uses an adapted version of the GOV.UK Prototype Kit - but with a haunted twist. The “Department for Supernatural Affairs” and its ghostly reports provide a creative backdrop for exploring accessibility barriers such as colour contrast, keyboard navigation, and focus order.
 
 <h2>Purpose</h2>
+
+<p>
 This resource is designed for workshops, self-led learning and team exercises. Each page intentionally fails one or more WCAG 2.2 AA criteria. It encourages learners to test pages using a range of tools and assistive technologies, and to discuss the impact of these issues on real users.
-If you'd like to use this as a training session you can <a href ="https://github.com/Lori-T/record-a-ghost-sighting/blob/main/app/assets/images/How%20to%20be%20a%20good%20ghost%20spotter%20-%20accessibility%20exercise.pptx">download a powerpoint presentation with speaker notes for the session.</a> 
+</p>
+
+<p>
+If you'd like to run this as a training session, you can <a href="https://github.com/Lori-T/record-a-ghost-sighting/raw/main/app/assets/images/How_to_be_a_good_ghost_spotter_accessibility.pptx">download the PowerPoint presentation with speaker notes</a>.
+</p>
 
 <h2>Contribute or get in touch</h2>
 This resource is not perfect and welcomes contribution from the accessibility community to improve and expand its content.
